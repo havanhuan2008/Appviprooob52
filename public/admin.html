@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Console</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{--blue:#2563eb;--cyan:#06b6d4;--green:#10b981;--red:#ef4444;--yellow:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:#020817;color:#e2e8f0;min-height:100vh}body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 10%,rgba(37,99,235,.18),transparent 35%),radial-gradient(circle at 85% 85%,rgba(6,182,212,.12),transparent 35%);pointer-events:none}.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:24px}.login,.shell{background:rgba(15,23,42,.82);border:1px solid rgba(96,165,250,.18);border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.25);backdrop-filter:blur(18px)}.login{max-width:420px;margin:70px auto;padding:24px}.title{font:800 24px Nunito,sans-serif;margin-bottom:8px}.sub{color:#94a3b8;font:700 12px Nunito,sans-serif;line-height:1.6;margin-bottom:18px}.grid{display:grid;gap:12px}input,select,textarea{width:100%;background:rgba(2,8,23,.52);border:1px solid rgba(96,165,250,.16);color:#e2e8f0;border-radius:14px;padding:12px 14px;font:700 13px Inter,sans-serif;outline:none}button{border:none;cursor:pointer;border-radius:14px;padding:12px 16px;font:800 13px Nunito,sans-serif}button.primary{background:linear-gradient(135deg,rgba(37,99,235,.9),rgba(6,182,212,.62));color:#fff;border:1px solid rgba(96,165,250,.35)}button.secondary{background:rgba(15,23,42,.72);color:#93c5fd;border:1px solid rgba(96,165,250,.18)}button.danger{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.22)}.msg{min-height:18px;font:700 12px Nunito,sans-serif}.shell{display:none;padding:18px}.shell.show{display:block}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.top h1{font:800 24px Nunito,sans-serif}.top p{color:#94a3b8;font:700 12px Nunito,sans-serif;margin-top:3px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.stat{background:rgba(2,8,23,.52);border:1px solid rgba(96,165,250,.12);border-radius:18px;padding:14px}.stat .l{color:#64748b;font:700 11px Nunito,sans-serif;text-transform:uppercase;letter-spacing:.8px}.stat .v{font:800 22px 'JetBrains Mono',monospace;margin-top:6px}.cols{display:grid;grid-template-columns:1.05fr 1.4fr;gap:18px}.panel{background:rgba(2,8,23,.46);border:1px solid rgba(96,165,250,.12);border-radius:20px;padding:16px}.panel h2{font:800 16px Nunito,sans-serif;margin-bottom:12px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.full{grid-column:1/-1}.tablewrap{overflow:auto;max-height:560px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px 8px;border-bottom:1px solid rgba(96,165,250,.08);text-align:left;vertical-align:top}th{color:#94a3b8;font:700 11px Nunito,sans-serif;text-transform:uppercase;letter-spacing:.8px;position:sticky;top:0;background:rgba(2,8,23,.92)}.mono{font-family:'JetBrains Mono',monospace}.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font:700 11px Nunito,sans-serif}.ok{background:rgba(16,185,129,.12);color:#a7f3d0;border:1px solid rgba(16,185,129,.22)}.warn{background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.22)}.err{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.22)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}@media(max-width:980px){.stats{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}.form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="login" id="loginBox">
+    <div class="title">Admin Console</div>
+    <div class="sub">Trang quản trị riêng, không hiển thị trong app chính. Dùng để tạo key, xem thiết bị, khóa/mở key và gửi thông báo.</div>
+    <div class="grid">
+      <input id="user" value="admin" placeholder="Username admin">
+      <input id="pass" type="password" placeholder="Password admin">
+      <input id="token" placeholder="Hoặc dán ADMIN_TOKEN để đăng nhập nhanh">
+      <button class="primary" id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập quản trị</button>
+      <div class="msg" id="loginMsg"></div>
+    </div>
+  </div>
+
+  <div class="shell" id="shell">
+    <div class="top"><div><h1>VIP License Admin</h1><p>Quản lý key, thiết bị, thông báo và audit</p></div><div style="display:flex;gap:8px"><button class="secondary" id="reloadBtn">Làm mới</button><button class="danger" id="logoutBtn">Đăng xuất</button></div></div>
+    <div class="stats"><div class="stat"><div class="l">Tổng key</div><div class="v" id="stTotal">0</div></div><div class="stat"><div class="l">Đang hoạt động</div><div class="v" id="stActive">0</div></div><div class="stat"><div class="l">Đã hết hạn</div><div class="v" id="stExpired">0</div></div><div class="stat"><div class="l">Thiết bị</div><div class="v" id="stDevices">0</div></div></div>
+    <div class="cols">
+      <div class="panel">
+        <h2>Tạo key</h2>
+        <div class="form"><input id="prefix" value="VIP" placeholder="Prefix"><input id="hours" type="number" min="1" value="24" placeholder="Số giờ"><input id="maxDevices" type="number" min="1" value="1" placeholder="Số thiết bị"><input id="note" class="full" placeholder="Ghi chú"><button class="primary full" id="createKeyBtn">Tạo key mới</button><div class="msg full" id="createMsg"></div></div>
+        <h2 style="margin-top:20px">Gửi thông báo</h2>
+        <div class="form"><select id="ntype"><option value="info">info</option><option value="success">success</option><option value="warn">warn</option><option value="danger">danger</option></select><input id="ntitle" placeholder="Tiêu đề"><textarea id="nmsg" rows="4" class="full" placeholder="Nội dung"></textarea><button class="secondary full" id="sendNotifBtn">Gửi thông báo</button><div class="msg full" id="notifMsg"></div></div>
+        <h2 style="margin-top:20px">Audit gần đây</h2><div class="tablewrap" id="auditWrap"></div>
+      </div>
+      <div class="panel">
+        <div class="toolbar"><button class="secondary" id="tabKeys">Danh sách key</button><button class="secondary" id="tabDevices">Thiết bị</button></div>
+        <div class="tablewrap" id="tableWrap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let ADMIN_TOKEN = localStorage.getItem('v4_admin_token') || '';
+let currentTab = 'keys';
+function setMsg(id, text, color='#94a3b8'){ const el=document.getElementById(id); el.textContent=text; el.style.color=color; }
+function api(url, options={}){ const headers={'Content-Type':'application/json', ...(options.headers||{})}; if(ADMIN_TOKEN) headers['x-admin-token']=ADMIN_TOKEN; return fetch(url,{...options,headers}).then(async r=>{ const d=await r.json().catch(()=>({ok:false,message:'API response invalid'})); if(!r.ok||d.ok===false) throw new Error(d.message||'API lỗi'); return d; }); }
+async function login(){ try{ const d=await api('/api/admin/login',{method:'POST',body:JSON.stringify({username:document.getElementById('user').value.trim(),password:document.getElementById('pass').value,token:document.getElementById('token').value.trim()})}); ADMIN_TOKEN=d.token; localStorage.setItem('v4_admin_token',ADMIN_TOKEN); document.getElementById('loginBox').style.display='none'; document.getElementById('shell').classList.add('show'); await loadAll(); }catch(e){ setMsg('loginMsg', e.message, '#fca5a5'); } }
+function fmt(ts){ return ts ? new Date(ts).toLocaleString('vi-VN') : 'Vĩnh viễn'; }
+function chip(active, exp){ if(active===false) return '<span class="chip err">Khóa</span>'; if(exp && exp < Date.now()) return '<span class="chip warn">Hết hạn</span>'; return '<span class="chip ok">Hoạt động</span>'; }
+async function loadStats(){ const d=await api('/api/admin/stats'); document.getElementById('stTotal').textContent=d.stats.totalKeys; document.getElementById('stActive').textContent=d.stats.activeKeys; document.getElementById('stExpired').textContent=d.stats.expiredKeys; document.getElementById('stDevices').textContent=d.stats.devices; }
+async function loadKeys(){ const d=await api('/api/admin/keys'); document.getElementById('tableWrap').innerHTML=`<table><thead><tr><th>Key</th><th>Loại</th><th>Trạng thái</th><th>Hết hạn</th><th>Thiết bị</th><th>Ghi chú</th><th>Hành động</th></tr></thead><tbody>${(d.keys||[]).map(k=>`<tr><td class="mono">${k.key}</td><td>${k.type}</td><td>${chip(k.active!==false,k.expiresAt)}</td><td>${fmt(k.expiresAt)}</td><td>${Object.keys(k.devices||{}).length}/${k.maxDevices||1}</td><td>${k.note||''}</td><td style="display:flex;gap:6px;flex-wrap:wrap"><button class="secondary" onclick="toggleKey('${k.key}')">${k.active!==false?'Khóa':'Mở'}</button><button class="secondary" onclick="extendKey('${k.key}')">+24h</button></td></tr>`).join('') || '<tr><td colspan="7">Không có key</td></tr>'}</tbody></table>`; }
+async function loadDevices(){ const d=await api('/api/admin/devices'); document.getElementById('tableWrap').innerHTML=`<table><thead><tr><th>Device</th><th>Key</th><th>Loại</th><th>First login</th><th>Last login</th><th>User agent</th></tr></thead><tbody>${(d.devices||[]).map(x=>`<tr><td class="mono">${x.deviceId}</td><td class="mono">${x.key}</td><td>${x.keyType}</td><td>${fmt(x.firstLogin)}</td><td>${fmt(x.lastLogin)}</td><td style="max-width:260px;word-break:break-word">${x.userAgent||''}</td></tr>`).join('') || '<tr><td colspan="6">Không có thiết bị</td></tr>'}</tbody></table>`; }
+async function loadAudit(){ const d=await api('/api/admin/audit'); document.getElementById('auditWrap').innerHTML=`<table><thead><tr><th>Thời gian</th><th>Action</th><th>Meta</th></tr></thead><tbody>${(d.audit||[]).map(a=>`<tr><td>${fmt(a.createdAt)}</td><td>${a.action}</td><td style="word-break:break-word">${JSON.stringify(a.meta||{})}</td></tr>`).join('') || '<tr><td colspan="3">Chưa có audit</td></tr>'}</tbody></table>`; }
+async function loadAll(){ await Promise.all([loadStats(), loadAudit(), currentTab==='keys'?loadKeys():loadDevices()]); }
+async function createKey(){ try{ const d=await api('/api/admin/keys',{method:'POST',body:JSON.stringify({prefix:document.getElementById('prefix').value.trim()||'VIP',hours:Number(document.getElementById('hours').value||24),maxDevices:Number(document.getElementById('maxDevices').value||1),note:document.getElementById('note').value.trim()})}); setMsg('createMsg', 'Đã tạo key: '+d.key.key, '#6ee7b7'); await loadAll(); }catch(e){ setMsg('createMsg', e.message, '#fca5a5'); } }
+async function sendNotif(){ try{ await api('/api/admin/notifications',{method:'POST',body:JSON.stringify({type:document.getElementById('ntype').value,title:document.getElementById('ntitle').value.trim(),message:document.getElementById('nmsg').value.trim()})}); setMsg('notifMsg', 'Đã gửi thông báo.', '#6ee7b7'); await loadAudit(); }catch(e){ setMsg('notifMsg', e.message, '#fca5a5'); } }
+async function toggleKey(key){ await api('/api/admin/keys/'+encodeURIComponent(key)+'/toggle',{method:'POST'}); await loadAll(); }
+async function extendKey(key){ await api('/api/admin/keys/'+encodeURIComponent(key)+'/extend',{method:'POST',body:JSON.stringify({hours:24})}); await loadAll(); }
+document.getElementById('loginBtn').onclick=login; document.getElementById('reloadBtn').onclick=loadAll; document.getElementById('logoutBtn').onclick=()=>{ localStorage.removeItem('v4_admin_token'); location.reload(); }; document.getElementById('createKeyBtn').onclick=createKey; document.getElementById('sendNotifBtn').onclick=sendNotif; document.getElementById('tabKeys').onclick=async()=>{ currentTab='keys'; await loadKeys(); }; document.getElementById('tabDevices').onclick=async()=>{ currentTab='devices'; await loadDevices(); };
+if(ADMIN_TOKEN){ document.getElementById('loginBox').style.display='none'; document.getElementById('shell').classList.add('show'); loadAll().catch(()=>{ localStorage.removeItem('v4_admin_token'); location.reload(); }); }
+</script>
+</body>
+</html>

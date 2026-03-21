@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Key Portal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{--blue:#2563eb;--cyan:#06b6d4;--green:#10b981;--yellow:#f59e0b;--red:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:#020817;color:#e2e8f0;min-height:100vh}body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 10%,rgba(37,99,235,.18),transparent 35%),radial-gradient(circle at 85% 85%,rgba(6,182,212,.12),transparent 40%);pointer-events:none}.wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.card{width:100%;max-width:430px;background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(30,41,59,.86));border:1px solid rgba(96,165,250,.2);border-radius:28px;padding:26px;box-shadow:0 30px 80px rgba(37,99,235,.18)}.logo{width:82px;height:82px;border-radius:24px;background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(6,182,212,.16));border:1px solid rgba(96,165,250,.36);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 28px rgba(37,99,235,.24)}.logo i{font-size:32px;color:#60a5fa}h1{text-align:center;font:800 24px Nunito,sans-serif;margin-bottom:6px}.sub{text-align:center;color:#94a3b8;font:700 12px Nunito,sans-serif;line-height:1.65;margin-bottom:18px}.grid{display:grid;gap:10px}.meta{display:flex;gap:10px;align-items:flex-start;background:rgba(15,23,42,.56);border:1px solid rgba(96,165,250,.1);border-radius:14px;padding:12px 14px}.meta i{width:18px;color:#60a5fa;margin-top:2px}.ml{font:700 11px Nunito,sans-serif;color:#64748b;text-transform:uppercase;letter-spacing:.7px}.mv{font:700 12px Nunito,sans-serif;color:#e2e8f0;line-height:1.5;word-break:break-all}.btns{display:grid;gap:10px;margin:18px 0}button,a{width:100%;border:none;border-radius:14px;padding:14px 16px;cursor:pointer;font:800 13px Nunito,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:.25s}button:hover,a:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,rgba(37,99,235,.9),rgba(6,182,212,.62));color:#fff;border:1px solid rgba(96,165,250,.42);box-shadow:0 8px 28px rgba(37,99,235,.22)}.secondary{background:rgba(15,23,42,.72);color:#93c5fd;border:1px solid rgba(96,165,250,.18)}.ghost{background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.08)}.keybox{display:none;margin-top:16px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);border-radius:18px;padding:16px}.keybox.show{display:block}.kt{display:flex;align-items:center;gap:8px;color:#a7f3d0;font:800 13px Nunito,sans-serif;margin-bottom:10px}.field{display:flex;gap:10px;align-items:center;background:rgba(2,8,23,.56);border:1px solid rgba(96,165,250,.12);border-radius:14px;padding:12px 14px}.val{flex:1;word-break:break-all;font:700 13px 'JetBrains Mono',monospace}.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.22);color:#a7f3d0;font:700 11px Nunito,sans-serif;margin-top:10px}.status{min-height:20px;text-align:center;font:800 12px Nunito,sans-serif}.ok{color:#6ee7b7}.err{color:#fca5a5}.info{color:#67e8f9}.foot{text-align:center;color:#64748b;font:700 11px Nunito,sans-serif;margin-top:16px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<div class="logo"><i class="fa-solid fa-key"></i></div>
+<h1>Free Key Portal</h1>
+<div class="sub">Trang nhận key riêng. Sau khi hoàn tất short-link, hệ thống sẽ tạo random key free 5 giờ cho thiết bị hiện tại.</div>
+<div class="grid">
+  <div class="meta"><i class="fa-solid fa-mobile-screen-button"></i><div><div class="ml">Device ID</div><div class="mv" id="deviceText">...</div></div></div>
+  <div class="meta"><i class="fa-solid fa-link"></i><div><div class="ml">Trạng thái phiên</div><div class="mv" id="sessionText">Chưa có phiên lấy key</div></div></div>
+  <div class="meta"><i class="fa-solid fa-hourglass-half"></i><div><div class="ml">Thời hạn</div><div class="mv">5 giờ · tối đa 1 thiết bị</div></div></div>
+</div>
+<div class="btns">
+  <button class="primary" id="btnCreate"><i class="fa-solid fa-wand-magic-sparkles"></i> Tạo link lấy key</button>
+  <a class="secondary" id="btnOpen" href="#" target="_blank"><i class="fa-solid fa-up-right-from-square"></i> Mở link</a>
+  <button class="ghost" id="btnClaim"><i class="fa-solid fa-gift"></i> Nhận key</button>
+  <a class="ghost" href="/index.html"><i class="fa-solid fa-arrow-left"></i> Quay lại app</a>
+</div>
+<div class="keybox" id="keyBox"><div class="kt"><i class="fa-solid fa-circle-check"></i> Key đã sẵn sàng</div><div class="field"><div class="val" id="keyValue">...</div><button class="secondary" id="copyKey" style="width:auto;padding:10px 12px"><i class="fa-solid fa-copy"></i></button></div><div class="chip" id="expiryText"><i class="fa-solid fa-clock"></i> 5 giờ</div></div>
+<div class="status info" id="status">Sẵn sàng tạo short-link.</div>
+<div class="foot">Sau khi nhận key, hãy quay lại app và đăng nhập bằng key vừa cấp.</div>
+</div></div>
+<script>
+const DEVICE_ID = (()=>{ let id=localStorage.getItem('_v4_device_id'); if(!id){ const arr=new Uint8Array(16); crypto.getRandomValues(arr); id=Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); localStorage.setItem('_v4_device_id', id);} return id;})();
+document.getElementById('deviceText').textContent = DEVICE_ID;
+let currentRid = new URLSearchParams(location.search).get('rid') || '';
+let currentUrl = '';
+function setStatus(text, cls='info'){ const el=document.getElementById('status'); el.className='status '+cls; el.textContent=text; }
+function api(url, options={}){ return fetch(url,{headers:{'Content-Type':'application/json', ...(options.headers||{})}, ...options}).then(async r=>{ const d=await r.json().catch(()=>({ok:false,message:'API response invalid'})); if(!r.ok||d.ok===false) throw new Error(d.message||'API lỗi'); return d; }); }
+async function createLink(){ try{ setStatus('Đang tạo short-link...', 'info'); const d=await api('/api/free-link/create',{method:'POST', body:JSON.stringify({deviceId:DEVICE_ID})}); currentRid=d.rid; currentUrl=d.shortUrl; document.getElementById('btnOpen').href=currentUrl; document.getElementById('sessionText').textContent=`RID: ${currentRid} · Hết hạn sau 30 phút`; setStatus('Đã tạo link thành công. Hãy mở link và hoàn tất trang trung gian.', 'ok'); }catch(e){ setStatus(e.message,'err'); } }
+async function claim(){ if(!currentRid) return setStatus('Chưa có RID để nhận key.','err'); try{ setStatus('Đang nhận key từ phiên đã xác thực...', 'info'); const d=await api('/api/free-key/claim',{method:'POST',body:JSON.stringify({rid:currentRid,deviceId:DEVICE_ID,userAgent:navigator.userAgent})}); document.getElementById('keyValue').textContent=d.key; document.getElementById('expiryText').innerHTML=`<i class="fa-solid fa-clock"></i> Hết hạn: ${new Date(d.expiresAt).toLocaleString('vi-VN')}`; document.getElementById('keyBox').classList.add('show'); setStatus('Nhận key thành công. Hãy copy key và quay lại app.', 'ok'); }catch(e){ setStatus(e.message,'err'); } }
+document.getElementById('btnCreate').onclick=createLink; document.getElementById('btnClaim').onclick=claim; document.getElementById('copyKey').onclick=async()=>{ await navigator.clipboard.writeText(document.getElementById('keyValue').textContent.trim()); setStatus('Đã sao chép key vào clipboard.', 'ok'); };
+const params=new URLSearchParams(location.search); if(params.get('error')) setStatus(params.get('error'),'err'); if(params.get('verified')==='1'&&currentRid){ document.getElementById('sessionText').textContent=`RID: ${currentRid} · Đã xác thực thành công`; setStatus('Xác thực thành công. Nhấn Nhận key để lấy key 5 giờ.', 'ok'); }
+createLink();
+</script>
+</body>
+</html>
