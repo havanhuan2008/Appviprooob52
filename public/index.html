@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VIP PRO LICENSE V4</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{--blue:#2563eb;--cyan:#06b6d4;--green:#10b981;--red:#ef4444;--yellow:#f59e0b;--purple:#8b5cf6;--text:#e2e8f0;--muted:#94a3b8;--panel:rgba(15,23,42,.82);--line:rgba(96,165,250,.16)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:Inter,sans-serif;background:#020817;color:var(--text);min-height:100vh;overflow-x:hidden}
+body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 10%,rgba(37,99,235,.18),transparent 35%),radial-gradient(circle at 85% 85%,rgba(6,182,212,.14),transparent 35%),radial-gradient(circle at 50% 50%,rgba(139,92,246,.08),transparent 45%);pointer-events:none}
+#bg{position:fixed;inset:0;pointer-events:none}
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(6,182,212,.01) 3px,rgba(6,182,212,.01) 4px);pointer-events:none}
+.wrap{position:relative;z-index:2;min-height:100vh;padding:24px 18px 40px}
+.screen{display:none;flex-direction:column;align-items:center}
+.screen.active{display:flex}
+.center{justify-content:center;min-height:100vh}
+.card{width:100%;max-width:380px;background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(30,41,59,.82));border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:0 24px 80px rgba(37,99,235,.16),0 0 0 1px rgba(96,165,250,.05);backdrop-filter:blur(18px);position:relative;overflow:hidden}
+.card:before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(to right,transparent,rgba(96,165,250,.06),transparent);animation:shine 4s infinite}
+@keyframes shine{100%{left:160%}}
+.logo{position:relative;display:flex;justify-content:center;margin-bottom:22px}
+.logo img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid rgba(96,165,250,.45);box-shadow:0 0 30px rgba(37,99,235,.28)}
+.ring,.ring2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%}
+.ring{width:92px;height:92px;border:1px solid rgba(96,165,250,.32);animation:spin 4s linear infinite}
+.ring2{width:108px;height:108px;border:1px dashed rgba(6,182,212,.2);animation:spinr 5s linear infinite}
+@keyframes spin{100%{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes spinr{100%{transform:translate(-50%,-50%) rotate(-360deg)}}
+.title{text-align:center;font:800 22px Nunito,sans-serif;background:linear-gradient(135deg,#60a5fa,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.sub{text-align:center;font:600 12px Nunito,sans-serif;color:#475569;margin-bottom:20px;line-height:1.6}
+.statusrow{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(30,41,59,.52);border:1px solid rgba(96,165,250,.1);border-radius:12px;margin-bottom:18px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.3s infinite}
+.dot.ok{background:var(--green);box-shadow:0 0 8px rgba(16,185,129,.5)}
+@keyframes pulse{50%{opacity:.45}}
+.label{font:700 12px Nunito,sans-serif;color:#64748b;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.inpwrap{display:flex;align-items:center;background:rgba(30,41,59,.65);border:1.5px solid rgba(96,165,250,.2);border-radius:14px;overflow:hidden}
+.inpwrap:focus-within{border-color:rgba(96,165,250,.5);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.pre{padding:0 14px;color:#334155}
+.inp{flex:1;background:transparent;border:none;outline:none;color:var(--text);padding:14px 6px;font:700 14px 'JetBrains Mono',monospace}
+.inp::placeholder{font:600 12.5px Nunito,sans-serif;color:#334155}
+.eye{height:48px;padding:0 16px;background:transparent;border:none;border-left:1px solid rgba(96,165,250,.15);color:#334155;cursor:pointer}
+.strength{display:none;align-items:center;gap:8px;margin-top:10px}
+.strength.show{display:flex}
+.bars{display:flex;gap:4px}
+.bar{width:22px;height:4px;border-radius:5px;background:rgba(30,41,59,.8)}
+.l1{background:#ef4444}
+.l2{background:#f59e0b}
+.l3{background:#10b981}
+.err{display:none;align-items:center;gap:8px;margin-top:10px;padding:10px 12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.26);border-radius:10px;color:#fca5a5;font:700 12px Nunito,sans-serif}
+.actions{display:grid;gap:10px;margin-top:20px}
+.btn{width:100%;border:none;border-radius:14px;padding:14px 16px;cursor:pointer;font:800 13px Nunito,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:.25s}
+.btn.primary{background:linear-gradient(135deg,rgba(37,99,235,.9),rgba(6,182,212,.62));color:#fff;border:1px solid rgba(96,165,250,.4);box-shadow:0 8px 28px rgba(37,99,235,.25)}
+.btn.secondary{background:rgba(15,23,42,.7);color:#93c5fd;border:1px solid rgba(96,165,250,.18)}
+.btn.success{background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(6,182,212,.12));color:#d1fae5;border:1px solid rgba(16,185,129,.22)}
+.btn.danger{background:rgba(239,68,68,.08);color:#fca5a5;border:1px solid rgba(239,68,68,.22)}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+.features{width:100%;max-width:380px;margin-top:18px;display:grid;gap:8px}
+.feat{display:flex;align-items:center;gap:10px;color:#64748b;font:700 12px Nunito,sans-serif}
+.check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.28);color:#6ee7b7;font-size:9px}
+.topnav{width:100%;max-width:520px;display:flex;align-items:center;gap:12px;background:rgba(15,23,42,.75);border:1px solid var(--line);border-radius:20px;padding:10px 16px;margin-bottom:16px;backdrop-filter:blur(18px)}
+.topnav img{width:38px;height:38px;border-radius:11px;object-fit:cover;border:1px solid rgba(96,165,250,.35)}
+.topnav .meta{flex:1}
+.topnav .name{font:800 13px Nunito,sans-serif}
+.topnav .mini{font:700 10.5px Nunito,sans-serif;color:#64748b}
+.navbtn{width:36px;height:36px;border-radius:10px;background:rgba(30,41,59,.7);border:1px solid rgba(96,165,250,.16);display:flex;align-items:center;justify-content:center;color:#64748b;cursor:pointer;position:relative}
+.badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--red);display:none;align-items:center;justify-content:center;font:800 10px Nunito,sans-serif;color:#fff}
+.badge.show{display:flex}
+.stats{width:100%;max-width:520px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:rgba(15,23,42,.72);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat .l{font:700 10px Nunito,sans-serif;color:#64748b;text-transform:uppercase;letter-spacing:.8px}
+.stat .v{margin-top:6px;font:800 17px 'JetBrains Mono',monospace}
+.infobox,.slidercard,.module,.list,.note{width:100%;max-width:520px;background:rgba(15,23,42,.7);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.note{display:flex;gap:12px;align-items:flex-start}
+.note img{width:46px;height:46px;border-radius:12px;object-fit:cover;border:1px solid rgba(96,165,250,.35)}
+.note .h{font:800 13px Nunito,sans-serif;margin-bottom:8px}
+.note .r{display:flex;gap:7px;align-items:center;color:#64748b;font:700 11px Nunito,sans-serif;margin-bottom:4px}
+.strip{display:flex;align-items:center;gap:12px}
+.strip i{color:#60a5fa}
+.mono{font-family:'JetBrains Mono',monospace}
+.section{width:100%;max-width:520px;font:800 11px Nunito,sans-serif;color:#64748b;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.quick{width:100%;max-width:520px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.q{border-radius:14px;padding:12px 6px;background:rgba(15,23,42,.72);border:1px solid var(--line);display:flex;flex-direction:column;gap:7px;align-items:center;text-align:center;color:#93c5fd;font:800 10px Nunito,sans-serif;cursor:pointer}
+.cards{width:100%;max-width:520px;display:grid;gap:8px;margin-bottom:14px}
+.row{display:flex;align-items:center;gap:12px;background:rgba(15,23,42,.72);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.row.on{border-color:rgba(96,165,250,.4);box-shadow:0 0 18px rgba(37,99,235,.12)}
+.ico{width:40px;height:40px;border-radius:12px;background:rgba(37,99,235,.12);border:1px solid rgba(96,165,250,.2);display:flex;align-items:center;justify-content:center;color:#60a5fa}
+.txt{flex:1}
+.txt .h{font:800 13px Nunito,sans-serif}
+.txt .d{font:700 11px Nunito,sans-serif;color:#64748b;margin-top:3px}
+.pill{font:800 10px 'JetBrains Mono',monospace;padding:3px 8px;border-radius:9px;background:rgba(30,41,59,.8);color:#64748b;border:1px solid rgba(96,165,250,.15)}
+.row.on .pill{background:rgba(37,99,235,.18);color:#60a5fa;border-color:rgba(96,165,250,.4)}
+.switch{position:relative;width:42px;height:24px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;border-radius:24px;background:rgba(30,41,59,.8);border:1px solid rgba(96,165,250,.15);cursor:pointer}
+.slider:before{content:'';position:absolute;left:3px;bottom:3px;width:16px;height:16px;border-radius:50%;background:#475569;transition:.25s}
+input:checked+.slider{background:linear-gradient(135deg,rgba(37,99,235,.75),rgba(6,182,212,.5));border-color:rgba(96,165,250,.45)}
+input:checked+.slider:before{transform:translateX(18px);background:#fff}
+.slidercard h3,.module h3{font:800 13px Nunito,sans-serif;margin-bottom:14px}
+.rrow{margin-bottom:14px}
+.rhead{display:flex;justify-content:space-between;margin-bottom:8px}
+.rname{font:700 12px Nunito,sans-serif;color:#64748b}
+.rval{font:800 12px 'JetBrains Mono',monospace;color:#60a5fa}
+.range{-webkit-appearance:none;width:100%;height:6px;border-radius:6px;background:rgba(30,41,59,.85);border:1px solid rgba(96,165,250,.15)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #2563eb;box-shadow:0 0 8px rgba(37,99,235,.4)}
+.modhead{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:12px}
+.modleft{display:flex;align-items:center;gap:12px}
+.terminal{max-height:0;overflow:hidden;transition:max-height .4s}
+.terminal.open{max-height:360px}
+.term{background:rgba(2,8,23,.95);border:1px solid rgba(37,99,235,.2);border-radius:14px;padding:14px;font:11px 'JetBrains Mono',monospace;color:#94a3b8;max-height:360px;overflow:auto}
+.line{padding:1.5px 0;line-height:1.55}
+.tc-blue{color:#60a5fa}
+.tc-cyan{color:#67e8f9}
+.tc-green{color:#6ee7b7}
+.tc-yellow{color:#fcd34d}
+.tc-muted{color:#334155}
+.prog{height:4px;border-radius:5px;background:rgba(30,41,59,.85);overflow:hidden;margin-top:5px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#06b6d4);transition:width .35s}
+.logout{margin-top:4px}
+.modalbg,.notifbg{position:fixed;inset:0;background:rgba(2,8,23,.8);backdrop-filter:blur(10px);display:none;justify-content:center;align-items:flex-end;z-index:40}
+.modalbg.show,.notifbg.show{display:flex}
+.modal,.notif{width:100%;max-width:520px;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(30,41,59,.96));border:1px solid rgba(96,165,250,.22);border-radius:26px 26px 0 0;padding:22px 20px 38px}
+.drag{width:42px;height:4px;border-radius:5px;background:rgba(96,165,250,.28);margin:0 auto 18px}
+.modicon{width:72px;height:72px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(6,182,212,.12));border:1px solid rgba(96,165,250,.35);color:#60a5fa;font-size:28px;box-shadow:0 0 30px rgba(37,99,235,.25)}
+.mtitle{text-align:center;font:800 18px Nunito,sans-serif;margin-bottom:6px}
+.msub{text-align:center;color:#64748b;font:700 12px Nunito,sans-serif;margin-bottom:16px}
+.steps{display:grid;gap:10px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;background:rgba(30,41,59,.5);border:1px solid rgba(96,165,250,.08);opacity:.35}
+.step.active,.step.done{opacity:1}
+.sico{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(30,41,59,.9);border:1px solid rgba(96,165,250,.2);color:#475569}
+.step.active .sico{color:#60a5fa;border-color:rgba(96,165,250,.45)}
+.step.done .sico{color:#6ee7b7;border-color:rgba(16,185,129,.35)}
+.stext .h{font:800 12px Nunito,sans-serif}
+.stext .d{font:700 11px Nunito,sans-serif;color:#64748b;margin-top:2px}
+.pwrap{margin-bottom:16px}
+.prow{display:flex;justify-content:space-between;margin-bottom:8px;color:#64748b;font:700 11px Nunito,sans-serif}
+.pbar{height:6px;border-radius:6px;background:rgba(30,41,59,.85);border:1px solid rgba(96,165,250,.1);overflow:hidden}
+.pfill{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#06b6d4);transition:width .35s}
+.notifhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.notifhead .h{font:800 16px Nunito,sans-serif}
+.close{width:32px;height:32px;border-radius:9px;background:rgba(30,41,59,.7);border:1px solid rgba(96,165,250,.15);display:flex;align-items:center;justify-content:center;color:#64748b;cursor:pointer}
+.nlist{max-height:60vh;overflow:auto}
+.item{display:flex;gap:12px;padding:14px;border-radius:16px;background:rgba(30,41,59,.35);border:1px solid rgba(96,165,250,.1);margin-bottom:10px}
+.itype{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.info{background:rgba(37,99,235,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3)}
+.warn{background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.success{background:rgba(16,185,129,.12);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.dangerx{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.ibody{flex:1}
+.ibody .t{font:800 13px Nunito,sans-serif}
+.ibody .m{font:700 12px Nunito,sans-serif;color:#64748b;line-height:1.55;margin-top:4px}
+.ibody .tm{font:700 10px 'JetBrains Mono',monospace;color:#334155;margin-top:6px}
+@media(max-width:560px){.stats{grid-template-columns:repeat(3,1fr)}.quick{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas><div class="scan"></div>
+<div class="wrap">
+  <div class="screen active center" id="loginScreen">
+    <div class="card">
+      <div class="logo"><div class="ring"></div><div class="ring2"></div><img src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg" alt="logo"></div>
+      <div class="title">VIP PRO LICENSE V4</div>
+      <div class="sub">Nhập key để đăng nhập vào portal. Key free được cấp ở trang riêng sau khi hoàn tất short-link.</div>
+      <div class="statusrow"><div class="dot" id="apiDot"></div><div id="apiText" style="font:700 11.5px Nunito,sans-serif;color:#475569">Đang kết nối API...</div></div>
+      <div class="label"><i class="fa-solid fa-key"></i> Key đăng nhập</div>
+      <div class="inpwrap"><div class="pre"><i class="fa-solid fa-shield-halved"></i></div><input class="inp" id="keyInput" type="password" placeholder="Nhập key của bạn..." autocomplete="off"><button class="eye" id="eyeBtn"><i class="fa-solid fa-eye" id="eyeIcon"></i></button></div>
+      <div class="strength" id="strength"><div class="bars"><div class="bar" id="b1"></div><div class="bar" id="b2"></div><div class="bar" id="b3"></div></div><div id="strengthText" style="font:700 11px Nunito,sans-serif;color:#64748b">Nhập key...</div></div>
+      <div class="err" id="err"><i class="fa-solid fa-triangle-exclamation"></i><span id="errText">Key không hợp lệ</span></div>
+      <div class="actions">
+        <button class="btn primary" id="loginBtn"><i class="fa-solid fa-fingerprint"></i> <span id="loginText">Đăng Nhập</span></button>
+        <button class="btn success" id="freeKeyBtn"><i class="fa-solid fa-gift"></i> Mở trang lấy key free</button>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feat"><div class="check"><i class="fa-solid fa-check"></i></div>Tạo short-link lấy key free theo thiết bị</div>
+      <div class="feat"><div class="check"><i class="fa-solid fa-check"></i></div>Key free 5 giờ và chỉ dùng trên 1 thiết bị</div>
+      <div class="feat"><div class="check"><i class="fa-solid fa-check"></i></div>Portal free-key tách riêng khỏi app</div>
+      <div class="feat"><div class="check"><i class="fa-solid fa-check"></i></div>Admin quản lý key, thiết bị, thông báo ở file riêng</div>
+      <div class="feat"><div class="check"><i class="fa-solid fa-check"></i></div>Telegram bot quản trị có lệnh /taokey và /quanlithietbi</div>
+    </div>
+  </div>
+
+  <div class="screen" id="dashboard">
+    <div class="topnav">
+      <img src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg" alt="logo">
+      <div class="meta"><div class="name">VIP PRO LICENSE V4</div><div class="mini">Online · <span class="mono" id="ping">12ms</span></div></div>
+      <div class="navbtn" id="notifBtn"><i class="fa-solid fa-bell"></i><span class="badge" id="notifBadge">0</span></div>
+      <div class="navbtn" id="logoutTop"><i class="fa-solid fa-right-from-bracket"></i></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="l">Phiên</div><div class="v" id="sessionTimer">00:00</div></div>
+      <div class="stat"><div class="l">Module</div><div class="v" id="activeCount">0 / 8</div></div>
+      <div class="stat"><div class="l">KEY</div><div class="v">VIP</div></div>
+    </div>
+
+    <div class="infobox strip"><i class="fa-solid fa-shield-keyhole"></i><div><div style="font:700 10px Nunito,sans-serif;color:#334155;text-transform:uppercase;letter-spacing:.9px;margin-bottom:2px">Key đang dùng</div><div class="mono" id="keyStrip">••••</div></div><div style="margin-left:auto;font:700 11px Nunito,sans-serif;color:#67e8f9" id="expireStrip">...</div></div>
+
+    <div class="note"><img src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg" alt="logo"><div style="flex:1"><div class="h">VIP PRO LICENSE V4</div><div class="r"><i class="fa-solid fa-check" style="color:#6ee7b7"></i>Trạng thái: <strong style="color:#6ee7b7">Hoạt động</strong></div><div class="r"><i class="fa-solid fa-clock" style="color:#60a5fa"></i><span id="bannerExpire">Key hợp lệ</span></div><div class="r"><i class="fa-solid fa-server" style="color:#60a5fa"></i>Portal: Online · API secured</div></div></div>
+
+    <div class="section"><i class="fa-solid fa-bolt" style="color:#60a5fa"></i> Thao tác nhanh</div>
+    <div class="quick">
+      <div class="q" data-qa="all"><i class="fa-solid fa-power-off"></i><span>Bật tất cả</span></div>
+      <div class="q" data-qa="refresh"><i class="fa-solid fa-rotate"></i><span>Làm mới</span></div>
+      <div class="q" data-qa="portal"><i class="fa-solid fa-link"></i><span>Portal key</span></div>
+      <div class="q" data-qa="admin"><i class="fa-solid fa-gear"></i><span>Admin</span></div>
+    </div>
+
+    <div class="section"><i class="fa-solid fa-sliders" style="color:#60a5fa"></i> Function home</div>
+    <div class="cards" id="cards"></div>
+
+    <div class="slidercard">
+      <h3><i class="fa-solid fa-sliders" style="color:#60a5fa"></i> Điều chỉnh thông số</h3>
+      <div class="rrow"><div class="rhead"><div class="rname">Mức đồng bộ</div><div class="rval" id="sv1">50%</div></div><input class="range" id="rg1" type="range" min="0" max="100" value="50"></div>
+      <div class="rrow"><div class="rhead"><div class="rname">Tốc độ phản hồi</div><div class="rval" id="sv2">60%</div></div><input class="range" id="rg2" type="range" min="0" max="100" value="60"></div>
+      <div class="rrow" style="margin-bottom:0"><div class="rhead"><div class="rname">Cache cục bộ</div><div class="rval" id="sv3">75px</div></div><input class="range" id="rg3" type="range" min="10" max="200" value="75"></div>
+    </div>
+
+    <div class="module">
+      <div class="modhead"><div class="modleft"><div class="ico"><i class="fa-solid fa-terminal"></i></div><div><h3 style="margin:0">VIP Portal Engine</h3><div style="font:700 11px Nunito,sans-serif;color:#64748b">v4.0.0 · API · Admin ready</div></div></div><button class="btn secondary" style="width:auto;padding:10px 16px" id="runBtn"><i class="fa-solid fa-play" id="runIcon"></i> <span id="runLabel">Chạy module</span></button></div>
+      <div class="terminal" id="terminalBox"><div class="term" id="term"></div></div>
+    </div>
+
+    <button class="btn danger logout" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</button>
+  </div>
+</div>
+
+<div class="modalbg" id="checkBg"><div class="modal"><div class="drag"></div><div class="modicon" id="checkIcon"><i class="fa-solid fa-shield-halved"></i></div><div class="mtitle" id="checkTitle">Đang xác minh key</div><div class="msub" id="checkSub">Vui lòng đợi trong giây lát...</div><div class="steps"><div class="step" id="s1"><div class="sico"><i class="fa-solid fa-server"></i></div><div class="stext"><div class="h">Kết nối máy chủ</div><div class="d">Thiết lập phiên bảo mật...</div></div></div><div class="step" id="s2"><div class="sico"><i class="fa-solid fa-key"></i></div><div class="stext"><div class="h">Xác thực key</div><div class="d">Kiểm tra trạng thái key...</div></div></div><div class="step" id="s3"><div class="sico"><i class="fa-solid fa-mobile-screen-button"></i></div><div class="stext"><div class="h">Xác minh thiết bị</div><div class="d">Kiểm tra quyền truy cập...</div></div></div><div class="step" id="s4"><div class="sico"><i class="fa-solid fa-rocket"></i></div><div class="stext"><div class="h">Khởi động dashboard</div><div class="d">Nạp cấu hình portal...</div></div></div></div><div class="pwrap"><div class="prow"><span>Tiến trình xác minh</span><span class="mono" id="checkPct">0%</span></div><div class="pbar"><div class="pfill" id="checkFill"></div></div></div><div class="msub" id="checkResult"></div></div></div>
+
+<div class="notifbg" id="notifBg"><div class="notif"><div class="drag"></div><div class="notifhead"><div class="h">Thông báo</div><div class="close" id="closeNotif"><i class="fa-solid fa-xmark"></i></div></div><div class="nlist" id="nlist"></div></div></div>
+
+<script>
+const CONFIG = {
+  healthPath: '/api/health',
+  loginPath: '/api/auth/login',
+  statusPath: '/api/auth/status',
+  notificationsPath: '/api/public/notifications',
+  freeKeyPath: '/free-key.html',
+  adminPath: '/admin.html',
+  apiPollMs: 30000,
+  watcherMs: 60000,
+  pingMs: 3500,
+  sessionStorageKey: 'v4_saved_key',
+  sessionDataKey: 'v4_key_data',
+  notifReadKey: 'v4_notif_read',
+  deviceStorageKey: '_v4_device_id'
+};
+
+const state = {
+  deviceId: null,
+  readIds: JSON.parse(localStorage.getItem(CONFIG.notifReadKey) || '[]'),
+  notifications: [],
+  eye: false,
+  moduleRunning: false,
+  moduleTimeouts: [],
+  sessionTimer: null,
+  sessionStart: null,
+  watcher: null,
+  apiPoller: null
+};
+
+const features = [
+  ['Portal Sync','Đồng bộ app với hệ thống key theo thời gian thực','fa-cloud-arrow-up'],
+  ['Device Guard','Giới hạn key theo thiết bị đã đăng nhập','fa-mobile-screen-button'],
+  ['Admin Audit','Ghi lịch sử tạo key, khóa key và mở key','fa-clipboard-list'],
+  ['Free-Key Session','Quản lý phiên verify và claim free-key','fa-link'],
+  ['Notification Hub','Nhận thông báo từ admin hoặc bot','fa-bell'],
+  ['Key Watcher','Tự kiểm tra key còn hợp lệ trong phiên hiện tại','fa-eye'],
+  ['Bot Commands','Quản lý nhanh bằng Telegram bot','fa-robot'],
+  ['Render Ready','Chạy tốt trên Render hoặc Node VPS','fa-server']
+];
+
+const $ = (id) => document.getElementById(id);
+
+function getOrCreateDeviceId() {
+  let id = localStorage.getItem(CONFIG.deviceStorageKey);
+  if (id) return id;
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  id = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+  localStorage.setItem(CONFIG.deviceStorageKey, id);
+  return id;
+}
+
+function toast(msg, color = '#60a5fa') {
+  const el = document.createElement('div');
+  el.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:90;background:rgba(15,23,42,.95);border:1px solid rgba(96,165,250,.22);color:#e2e8f0;padding:11px 16px;border-radius:14px;font:800 12px Nunito,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.4)';
+  el.innerHTML = `<span style="color:${color};margin-right:8px">●</span>${msg}`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+async function api(url, options = {}) {
+  const init = {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    },
+    ...options
+  };
+  const response = await fetch(url, init);
+  const data = await response.json().catch(() => ({ ok: false, message: 'API response invalid' }));
+  if (!response.ok || data.ok === false) throw new Error(data.message || 'API lỗi');
+  return data;
+}
+
+function fmt(ts) {
+  if (!ts) return 'Vĩnh viễn';
+  const d = new Date(ts);
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function left(ts) {
+  if (!ts) return 'Vĩnh viễn';
+  const diff = ts - Date.now();
+  if (diff <= 0) return 'Đã hết hạn';
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  if (d > 0) return `${d}d ${h}h`;
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m} phút`;
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach((screen) => screen.classList.remove('active'));
+  $(id).classList.add('active');
+}
+
+function setApi(ok) {
+  $('apiDot').classList.toggle('ok', ok);
+  $('apiText').textContent = ok ? 'Server: Đã kết nối' : 'Server: Chưa kết nối';
+}
+
+function paintRange(input, outputId, unit) {
+  const value = Number(input.value);
+  const min = Number(input.min);
+  const max = Number(input.max);
+  const pct = ((value - min) / (max - min)) * 100;
+  $(outputId).textContent = `${value}${unit}`;
+  input.style.background = `linear-gradient(to right,#2563eb 0%,#06b6d4 ${pct}%,rgba(30,41,59,.85) ${pct}%)`;
+}
+
+function renderFeatures() {
+  $('cards').innerHTML = features.map((feature, index) => `
+    <div class="row" id="row${index + 1}">
+      <div class="ico"><i class="fa-solid ${feature[2]}"></i></div>
+      <div class="txt">
+        <div class="h">${feature[0]}</div>
+        <div class="d">${feature[1]}</div>
+      </div>
+      <div class="pill" id="pill${index + 1}">OFF</div>
+      <label class="switch"><input type="checkbox" data-row="${index + 1}"><span class="slider"></span></label>
+    </div>
+  `).join('');
+  document.querySelectorAll('.switch input').forEach((input) => {
+    input.addEventListener('change', (event) => toggleFeature(event.target));
+  });
+  updateCount();
+}
+
+function updateCount() {
+  const on = [...document.querySelectorAll('.switch input:checked')].length;
+  $('activeCount').textContent = `${on} / 8`;
+}
+
+function toggleFeature(input) {
+  const index = input.dataset.row;
+  const row = $(`row${index}`);
+  const pill = $(`pill${index}`);
+  if (input.checked) {
+    row.classList.add('on');
+    pill.textContent = 'ON';
+    toast(`${features[index - 1][0]} đã kích hoạt`, '#6ee7b7');
+  } else {
+    row.classList.remove('on');
+    pill.textContent = 'OFF';
+    toast(`${features[index - 1][0]} đã tắt`, '#94a3b8');
+  }
+  updateCount();
+}
+
+function resetSwitches() {
+  document.querySelectorAll('.switch input').forEach((input) => {
+    input.checked = false;
+    toggleFeature(input);
+  });
+}
+
+function renderNotifications() {
+  const map = {
+    info: ['info', 'fa-circle-info'],
+    warn: ['warn', 'fa-triangle-exclamation'],
+    success: ['success', 'fa-circle-check'],
+    danger: ['dangerx', 'fa-circle-xmark']
+  };
+  const unread = state.notifications.filter((n) => !state.readIds.includes(n.id));
+  const badge = $('notifBadge');
+  if (unread.length) {
+    badge.textContent = unread.length > 99 ? '99+' : String(unread.length);
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+  $('nlist').innerHTML = state.notifications.length
+    ? state.notifications.map((n) => {
+        const [cls, icon] = map[n.type] || map.info;
+        return `
+          <div class="item">
+            <div class="itype ${cls}"><i class="fa-solid ${icon}"></i></div>
+            <div class="ibody">
+              <div class="t">${n.title || 'Thông báo'}</div>
+              <div class="m">${n.message || ''}</div>
+              <div class="tm">${fmt(n.createdAt)}</div>
+            </div>
+          </div>
+        `;
+      }).join('')
+    : '<div style="text-align:center;color:#64748b;font:700 12px Nunito,sans-serif;padding:18px">Chưa có thông báo</div>';
+}
+
+async function loadNotifications() {
+  try {
+    const data = await api(CONFIG.notificationsPath);
+    state.notifications = data.notifications || [];
+    renderNotifications();
+  } catch {
+    // ignore silently, UI remains usable
+  }
+}
+
+async function loadStatus() {
+  try {
+    await api(CONFIG.healthPath);
+    setApi(true);
+  } catch {
+    setApi(false);
+  }
+}
+
+function showCheck(success, failMessage) {
+  const bg = $('checkBg');
+  const steps = ['s1', 's2', 's3', 's4'].map((id) => $(id));
+  const fill = $('checkFill');
+  const pct = $('checkPct');
+  const title = $('checkTitle');
+  const sub = $('checkSub');
+  const result = $('checkResult');
+  const icon = $('checkIcon');
+
+  steps.forEach((step) => step.classList.remove('active', 'done'));
+  fill.style.width = '0%';
+  pct.textContent = '0%';
+  result.textContent = '';
+  result.style.color = '#64748b';
+  title.textContent = 'Đang xác minh key';
+  sub.textContent = 'Vui lòng đợi trong giây lát...';
+  icon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+  bg.classList.add('show');
+
+  const times = [350, 1100, 1900, 2700];
+  times.forEach((time, index) => {
+    setTimeout(() => {
+      if (index > 0) steps[index - 1].classList.remove('active');
+      steps[index].classList.add('active');
+      setTimeout(() => {
+        steps[index].classList.remove('active');
+        steps[index].classList.add('done');
+        fill.style.width = [20, 45, 75, 100][index] + '%';
+        pct.textContent = [20, 45, 75, 100][index] + '%';
+      }, 420);
+    }, time);
+  });
+
+  setTimeout(() => {
+    if (success) {
+      title.textContent = 'Xác minh thành công';
+      sub.textContent = 'Key hợp lệ — đang vào dashboard...';
+      icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#6ee7b7"></i>';
+      result.textContent = 'Đăng nhập thành công';
+      result.style.color = '#6ee7b7';
+      setTimeout(() => bg.classList.remove('show'), 1100);
+    } else {
+      title.textContent = 'Xác minh thất bại';
+      sub.textContent = 'Key không hợp lệ';
+      icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:#fca5a5"></i>';
+      result.textContent = failMessage || 'Key không hợp lệ';
+      result.style.color = '#fca5a5';
+      setTimeout(() => bg.classList.remove('show'), 1500);
+    }
+  }, 3600);
+}
+
+function updateDashboard(key, keyData) {
+  $('keyStrip').textContent = key.length > 16 ? `${key.slice(0, 6)}••••${key.slice(-4)}` : key;
+  $('expireStrip').textContent = left(keyData.expiresAt);
+  $('bannerExpire').textContent = `Key hợp lệ · ${left(keyData.expiresAt)}`;
+}
+
+function startSessionClock() {
+  state.sessionStart = Date.now();
+  if (state.sessionTimer) clearInterval(state.sessionTimer);
+  state.sessionTimer = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - state.sessionStart) / 1000);
+    $('sessionTimer').textContent = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+  }, 1000);
+}
+
+function stopSessionClock() {
+  if (state.sessionTimer) clearInterval(state.sessionTimer);
+  state.sessionTimer = null;
+  $('sessionTimer').textContent = '00:00';
+}
+
+function clearWatcher() {
+  if (state.watcher) clearInterval(state.watcher);
+  state.watcher = null;
+}
+
+function startWatcher(key) {
+  clearWatcher();
+  state.watcher = setInterval(async () => {
+    try {
+      const data = await api(CONFIG.statusPath, {
+        method: 'POST',
+        body: JSON.stringify({ key, deviceId: state.deviceId })
+      });
+      updateDashboard(key, data.keyData);
+      localStorage.setItem(CONFIG.sessionDataKey, JSON.stringify(data.keyData));
+    } catch (error) {
+      clearWatcher();
+      showScreen('loginScreen');
+      $('err').style.display = 'flex';
+      $('errText').textContent = error.message;
+      localStorage.removeItem(CONFIG.sessionStorageKey);
+      localStorage.removeItem(CONFIG.sessionDataKey);
+      toast(error.message, '#fca5a5');
+    }
+  }, CONFIG.watcherMs);
+}
+
+function showDashboard(key, keyData) {
+  updateDashboard(key, keyData);
+  showScreen('dashboard');
+  startSessionClock();
+  startWatcher(key);
+}
+
+async function login() {
+  const key = $('keyInput').value.trim();
+  $('err').style.display = 'none';
+  if (!key) {
+    $('err').style.display = 'flex';
+    $('errText').textContent = 'Vui lòng nhập key';
+    return;
+  }
+
+  $('loginBtn').disabled = true;
+  $('loginText').textContent = 'Đang xác thực...';
+
+  try {
+    const data = await api(CONFIG.loginPath, {
+      method: 'POST',
+      body: JSON.stringify({
+        key,
+        deviceId: state.deviceId,
+        userAgent: navigator.userAgent
+      })
+    });
+    localStorage.setItem(CONFIG.sessionStorageKey, key);
+    localStorage.setItem(CONFIG.sessionDataKey, JSON.stringify(data.keyData));
+    showCheck(true);
+    setTimeout(() => showDashboard(key, data.keyData), 3900);
+  } catch (error) {
+    showCheck(false, error.message);
+    $('err').style.display = 'flex';
+    $('errText').textContent = error.message;
+  } finally {
+    setTimeout(() => {
+      $('loginBtn').disabled = false;
+      $('loginText').textContent = 'Đăng Nhập';
+    }, 1000);
+  }
+}
+
+function logout() {
+  localStorage.removeItem(CONFIG.sessionStorageKey);
+  localStorage.removeItem(CONFIG.sessionDataKey);
+  stopSessionClock();
+  clearWatcher();
+  stopModule();
+  resetSwitches();
+  $('keyInput').value = '';
+  $('strength').classList.remove('show');
+  showScreen('loginScreen');
+  toast('Đã đăng xuất', '#fca5a5');
+}
+
+function setupLogin() {
+  $('eyeBtn').onclick = () => {
+    state.eye = !state.eye;
+    $('keyInput').type = state.eye ? 'text' : 'password';
+    $('eyeIcon').className = state.eye ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+  };
+
+  $('keyInput').addEventListener('input', (event) => {
+    const value = event.target.value;
+    const strength = $('strength');
+    const label = $('strengthText');
+    const bars = ['b1', 'b2', 'b3'].map((id) => $(id));
+    if (!value) {
+      strength.classList.remove('show');
+      bars.forEach((bar) => { bar.className = 'bar'; });
+      return;
+    }
+    strength.classList.add('show');
+    if (value.length < 6) {
+      bars[0].className = 'bar l1';
+      bars[1].className = 'bar';
+      bars[2].className = 'bar';
+      label.textContent = 'Quá ngắn';
+      label.style.color = '#ef4444';
+    } else if (value.length < 15) {
+      bars[0].className = 'bar l2';
+      bars[1].className = 'bar l2';
+      bars[2].className = 'bar';
+      label.textContent = 'Có thể là key';
+      label.style.color = '#f59e0b';
+    } else {
+      bars[0].className = 'bar l3';
+      bars[1].className = 'bar l3';
+      bars[2].className = 'bar l3';
+      label.textContent = '✓ Key hợp lệ';
+      label.style.color = '#6ee7b7';
+    }
+  });
+
+  $('loginBtn').onclick = login;
+  $('keyInput').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') login();
+  });
+
+  $('freeKeyBtn').onclick = () => {
+    toast('Đang mở trang lấy key free...', '#6ee7b7');
+    setTimeout(() => window.open(CONFIG.freeKeyPath, '_blank'), 180);
+  };
+}
+
+function setupQuick() {
+  document.querySelectorAll('[data-qa]').forEach((el) => {
+    el.onclick = () => {
+      const key = el.dataset.qa;
+      if (key === 'all') {
+        document.querySelectorAll('.switch input').forEach((input) => {
+          input.checked = true;
+          toggleFeature(input);
+        });
+        return;
+      }
+      if (key === 'refresh') {
+        loadNotifications();
+        loadStatus();
+        toast('Đã làm mới cấu hình', '#67e8f9');
+        return;
+      }
+      if (key === 'portal') {
+        window.open(CONFIG.freeKeyPath, '_blank');
+        return;
+      }
+      if (key === 'admin') {
+        window.open(CONFIG.adminPath, '_blank');
+      }
+    };
+  });
+}
+
+function addTerminalLine(html, delay) {
+  const id = setTimeout(() => {
+    $('term').innerHTML += `<div class="line">${html}</div>`;
+    $('term').scrollTop = $('term').scrollHeight;
+  }, delay);
+  state.moduleTimeouts.push(id);
+}
+
+function stopModule() {
+  state.moduleTimeouts.forEach((id) => clearTimeout(id));
+  state.moduleTimeouts = [];
+  state.moduleRunning = false;
+  $('runIcon').className = 'fa-solid fa-play';
+  $('runLabel').textContent = 'Chạy module';
+}
+
+function runModule() {
+  if (state.moduleRunning) {
+    addTerminalLine('<span class="tc-muted">[STOP]</span> Module bị dừng bởi người dùng.', 0);
+    stopModule();
+    toast('Module đã dừng', '#fca5a5');
+    return;
+  }
+
+  state.moduleRunning = true;
+  $('terminalBox').classList.add('open');
+  $('term').innerHTML = '';
+  $('runIcon').className = 'fa-solid fa-stop';
+  $('runLabel').textContent = 'Dừng module';
+
+  const lines = [
+    '$ vip-license-portal --api --admin --telegram',
+    '[BOOT] Khởi động hệ thống V4...',
+    `[SYS] Thiết bị: ${state.deviceId.slice(0, 12)}...`,
+    '[OK] Kết nối API thành công',
+    '[OK] Tải thông báo và cấu hình hoàn tất',
+    '[INFO] Thành phần: app / free-key / admin / telegram bot',
+    '[DONE] Dashboard đã sẵn sàng.'
+  ];
+
+  lines.forEach((line, index) => {
+    const prefix = line.startsWith('$') ? '$' : line.slice(0, 6);
+    const body = line.startsWith('$') ? line.slice(2) : line.slice(7);
+    let cls = 'tc-muted';
+    if (line.includes('DONE')) cls = 'tc-green';
+    else if (line.includes('INFO')) cls = 'tc-cyan';
+    addTerminalLine(`<span class="tc-blue">${prefix}</span> <span class="${cls}">${body}</span>`, index * 340);
+  });
+
+  const finalId = setTimeout(() => {
+    state.moduleRunning = false;
+    $('runIcon').className = 'fa-solid fa-rotate-right';
+    $('runLabel').textContent = 'Chạy lại';
+    toast('Module V4 hoàn thành', '#67e8f9');
+  }, lines.length * 340);
+  state.moduleTimeouts.push(finalId);
+}
+
+async function autoLogin() {
+  const key = localStorage.getItem(CONFIG.sessionStorageKey);
+  if (!key) return;
+  try {
+    const data = await api(CONFIG.statusPath, {
+      method: 'POST',
+      body: JSON.stringify({ key, deviceId: state.deviceId })
+    });
+    showDashboard(key, data.keyData);
+  } catch {
+    localStorage.removeItem(CONFIG.sessionStorageKey);
+    localStorage.removeItem(CONFIG.sessionDataKey);
+  }
+}
+
+function setupNotifications() {
+  $('notifBtn').onclick = () => $('notifBg').classList.add('show');
+  $('closeNotif').onclick = () => $('notifBg').classList.remove('show');
+  $('notifBg').addEventListener('click', (event) => {
+    if (event.target === $('notifBg')) $('notifBg').classList.remove('show');
+  });
+}
+
+function setupTopActions() {
+  $('logoutTop').onclick = logout;
+  $('logoutBtn').onclick = logout;
+  $('runBtn').onclick = runModule;
+}
+
+function setupRanges() {
+  const map = [
+    ['rg1', 'sv1', '%'],
+    ['rg2', 'sv2', '%'],
+    ['rg3', 'sv3', 'px']
+  ];
+  map.forEach(([rangeId, valueId, unit]) => {
+    const input = $(rangeId);
+    const paint = () => paintRange(input, valueId, unit);
+    input.addEventListener('input', paint);
+    paint();
+  });
+}
+
+function startPing() {
+  setInterval(() => {
+    $('ping').textContent = `${Math.floor(Math.random() * 16 + 7)}ms`;
+  }, CONFIG.pingMs);
+}
+
+function startApiPoll() {
+  loadStatus();
+  if (state.apiPoller) clearInterval(state.apiPoller);
+  state.apiPoller = setInterval(loadStatus, CONFIG.apiPollMs);
+}
+
+function initBackground() {
+  const canvas = $('bg');
+  const ctx = canvas.getContext('2d');
+  let width;
+  let height;
+  const points = [];
+
+  function resize() {
+    width = canvas.width = innerWidth;
+    height = canvas.height = innerHeight;
+  }
+
+  function makePoint() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.8 + 0.3,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      a: Math.random() * 0.5 + 0.08
+    };
+  }
+
+  resize();
+  addEventListener('resize', resize);
+  for (let i = 0; i < 80; i += 1) points.push(makePoint());
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    points.forEach((point) => {
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, point.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(96,165,250,${point.a})`;
+      ctx.fill();
+      point.x += point.dx;
+      point.y += point.dy;
+      if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) {
+        Object.assign(point, makePoint());
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+function init() {
+  state.deviceId = getOrCreateDeviceId();
+  initBackground();
+  renderFeatures();
+  setupLogin();
+  setupQuick();
+  setupNotifications();
+  setupTopActions();
+  setupRanges();
+  startPing();
+  startApiPoll();
+  loadNotifications();
+  autoLogin();
+}
+
+init();
+</script>
+</body>
+</html>
