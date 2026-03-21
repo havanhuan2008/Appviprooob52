@@ -320,7 +320,7 @@ body::before{
 }
 
 /* =================== QUICK ACTIONS =================== */
-.quick{width:100%;max-width:540px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.quick{width:100%;max-width:540px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
 .q{
   border-radius:14px;padding:12px 6px;
   background:rgba(15,0,0,.8);
@@ -493,57 +493,148 @@ input:checked+.slider:before{
   box-shadow:0 0 8px rgba(255,0,0,.4)
 }
 
+/* =================== IMPROVED CHECK MODAL ICON =================== */
 .modicon{
-  width:76px;height:76px;margin:0 auto 16px;
+  width:90px;height:90px;margin:0 auto 18px;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,rgba(255,0,0,.2),rgba(150,0,0,.12));
-  border:1.5px solid rgba(255,0,0,.45);
-  color:#ff4444;font-size:30px;
-  box-shadow:0 0 30px rgba(255,0,0,.3);
+  background:linear-gradient(135deg,rgba(255,0,0,.18),rgba(150,0,0,.1));
+  border:2px solid rgba(255,0,0,.5);
+  color:#ff4444;font-size:34px;
+  box-shadow:
+    0 0 0 6px rgba(255,0,0,.06),
+    0 0 30px rgba(255,0,0,.4),
+    0 0 60px rgba(255,0,0,.15);
+  position:relative;
   animation:iconPulse 2s ease-in-out infinite
 }
-@keyframes iconPulse{0%,100%{box-shadow:0 0 30px rgba(255,0,0,.3)}50%{box-shadow:0 0 50px rgba(255,0,0,.5)}}
+.modicon::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1.5px dashed rgba(255,0,0,.25);
+  animation:spin3 6s linear infinite
+}
+.modicon::after{
+  content:'';position:absolute;inset:-16px;border-radius:50%;
+  border:1px solid rgba(255,0,0,.12);
+  animation:spinr 9s linear infinite
+}
+@keyframes spin3{100%{transform:rotate(360deg)}}
+@keyframes iconPulse{
+  0%,100%{box-shadow:0 0 0 6px rgba(255,0,0,.06),0 0 30px rgba(255,0,0,.4),0 0 60px rgba(255,0,0,.15)}
+  50%{box-shadow:0 0 0 10px rgba(255,0,0,.1),0 0 50px rgba(255,0,0,.6),0 0 90px rgba(255,0,0,.25)}
+}
 
-.mtitle{text-align:center;font:900 19px Nunito,sans-serif;margin-bottom:6px;color:#ffcccc}
+.modicon.success-icon{
+  background:linear-gradient(135deg,rgba(0,200,80,.15),rgba(0,150,50,.08));
+  border-color:rgba(0,200,80,.5);
+  color:#6ee7b7;
+  animation:iconPulseGreen 1.5s ease-in-out infinite
+}
+@keyframes iconPulseGreen{
+  0%,100%{box-shadow:0 0 0 6px rgba(0,200,80,.06),0 0 30px rgba(0,200,80,.3),0 0 60px rgba(0,200,80,.1)}
+  50%{box-shadow:0 0 0 10px rgba(0,200,80,.12),0 0 50px rgba(0,200,80,.5),0 0 90px rgba(0,200,80,.2)}
+}
+
+.modicon.fail-icon{
+  background:linear-gradient(135deg,rgba(255,0,0,.2),rgba(150,0,0,.12));
+  border-color:rgba(255,0,0,.7);
+  color:#ff6666;
+  animation:iconPulseFail 0.8s ease-in-out infinite
+}
+@keyframes iconPulseFail{
+  0%,100%{box-shadow:0 0 0 6px rgba(255,0,0,.1),0 0 40px rgba(255,0,0,.5),0 0 70px rgba(255,0,0,.2)}
+  50%{box-shadow:0 0 0 14px rgba(255,0,0,.15),0 0 60px rgba(255,0,0,.8),0 0 100px rgba(255,0,0,.3)}
+}
+
+.mtitle{
+  text-align:center;font:900 20px Nunito,sans-serif;margin-bottom:6px;
+  background:linear-gradient(135deg,#ff6666,#ff0000,#cc0000);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 6px rgba(255,0,0,.5))
+}
 .msub{text-align:center;color:#884444;font:700 12px Nunito,sans-serif;margin-bottom:16px}
+
+/* =================== IMPROVED CHECK STEPS =================== */
 .steps{display:grid;gap:10px;margin-bottom:16px}
 .step{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 12px;border-radius:12px;
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:14px;
   background:rgba(20,0,0,.5);
-  border:1px solid rgba(255,0,0,.08);
-  opacity:.35;transition:.4s
+  border:1px solid rgba(255,0,0,.06);
+  opacity:.35;transition:.5s ease
 }
 .step.active,.step.done{opacity:1}
 .step.active{
-  border-color:rgba(255,0,0,.4);
-  background:rgba(255,0,0,.08);
-  box-shadow:0 0 15px rgba(255,0,0,.1)
+  border-color:rgba(255,0,0,.5);
+  background:linear-gradient(135deg,rgba(255,0,0,.08),rgba(100,0,0,.05));
+  box-shadow:0 0 20px rgba(255,0,0,.12),inset 0 0 20px rgba(255,0,0,.03)
 }
-.step.done{border-color:rgba(255,0,0,.2)}
+.step.done{
+  border-color:rgba(255,0,0,.15);
+  background:rgba(15,0,0,.4)
+}
+.step.done-success{
+  border-color:rgba(0,200,80,.2) !important;
+  background:rgba(0,30,10,.4) !important
+}
 
 .sico{
-  width:30px;height:30px;border-radius:10px;
+  width:34px;height:34px;border-radius:11px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   background:rgba(30,0,0,.9);
-  border:1px solid rgba(255,0,0,.2);
-  color:#553333;transition:.4s
+  border:1px solid rgba(255,0,0,.15);
+  color:#553333;transition:.5s;font-size:14px
 }
-.step.active .sico{color:#ff4444;border-color:rgba(255,0,0,.55);box-shadow:0 0 10px rgba(255,0,0,.3);animation:stepPulse .8s ease-in-out infinite}
-@keyframes stepPulse{0%,100%{box-shadow:0 0 10px rgba(255,0,0,.3)}50%{box-shadow:0 0 20px rgba(255,0,0,.6)}}
-.step.done .sico{color:#6ee7b7;border-color:rgba(16,185,129,.35)}
+.step.active .sico{
+  color:#ff4444;border-color:rgba(255,0,0,.6);
+  background:rgba(60,0,0,.9);
+  box-shadow:0 0 14px rgba(255,0,0,.35),inset 0 0 8px rgba(255,0,0,.1);
+  animation:stepPulse .9s ease-in-out infinite
+}
+@keyframes stepPulse{
+  0%,100%{box-shadow:0 0 14px rgba(255,0,0,.35),inset 0 0 8px rgba(255,0,0,.1)}
+  50%{box-shadow:0 0 24px rgba(255,0,0,.6),inset 0 0 14px rgba(255,0,0,.2)}
+}
+.step.done .sico{color:#6ee7b7;border-color:rgba(16,185,129,.4);background:rgba(0,20,10,.9)}
+.step.active .sico i{animation:stepIconSpin 1.2s ease-in-out infinite alternate}
+@keyframes stepIconSpin{0%{transform:scale(1)}100%{transform:scale(1.2)}}
 
-.stext .h{font:800 12px Nunito,sans-serif;color:#ffaaaa}
+.stext .h{font:800 13px Nunito,sans-serif;color:#ffaaaa}
 .stext .d{font:700 11px Nunito,sans-serif;color:#884444;margin-top:2px}
+
+/* Step status badge */
+.step-status{
+  margin-left:auto;font:700 10px 'JetBrains Mono',monospace;color:#553333;
+  opacity:0;transition:.4s;flex-shrink:0
+}
+.step.active .step-status{opacity:1;color:#ff6666;animation:blink .7s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.step.done .step-status{opacity:1;color:#6ee7b7;animation:none}
+
 .pwrap{margin-bottom:16px}
 .prow{display:flex;justify-content:space-between;margin-bottom:8px;color:#884444;font:700 11px Nunito,sans-serif}
-.pbar{height:6px;border-radius:6px;background:rgba(30,0,0,.85);border:1px solid rgba(255,0,0,.1);overflow:hidden}
+.pbar{
+  height:8px;border-radius:8px;
+  background:rgba(30,0,0,.85);border:1px solid rgba(255,0,0,.12);
+  overflow:hidden;position:relative
+}
+.pbar::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+  animation:pbarShine 1.5s linear infinite
+}
+@keyframes pbarShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .pfill{
   height:100%;width:0;
-  background:linear-gradient(90deg,#cc0000,#ff0000,#ff4444);
-  transition:width .35s;
-  box-shadow:0 0 8px rgba(255,0,0,.6)
+  background:linear-gradient(90deg,#800000,#cc0000,#ff0000,#ff4444);
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 12px rgba(255,0,0,.7),0 0 3px rgba(255,100,100,.9);
+  position:relative
+}
+.pfill::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:6px;
+  background:rgba(255,200,200,.5);border-radius:0 4px 4px 0;
+  filter:blur(2px)
 }
 
 /* =================== NOTIFICATIONS =================== */
@@ -579,50 +670,94 @@ input:checked+.slider:before{
 .mini-modal{
   position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-120px);
   z-index:100;
-  width:calc(100% - 32px);max-width:340px;
-  background:linear-gradient(135deg,rgba(10,0,0,.98),rgba(25,5,5,.97));
-  border:1.5px solid rgba(255,0,0,.5);
-  border-radius:18px;padding:14px 16px;
-  box-shadow:0 0 30px rgba(255,0,0,.4),0 10px 40px rgba(0,0,0,.7);
+  width:calc(100% - 32px);max-width:360px;
+  background:linear-gradient(135deg,rgba(10,0,0,.99),rgba(28,5,5,.98));
+  border:1.5px solid rgba(255,0,0,.55);
+  border-radius:20px;padding:14px 16px;
+  box-shadow:
+    0 0 0 1px rgba(255,0,0,.1),
+    0 0 40px rgba(255,0,0,.5),
+    0 0 80px rgba(255,0,0,.15),
+    0 10px 40px rgba(0,0,0,.7);
   transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;
-  opacity:0;pointer-events:none
+  opacity:0;pointer-events:none;
+  overflow:hidden
+}
+.mini-modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,0,0,.7),transparent)
+}
+.mini-modal::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,0,0,.4),transparent)
 }
 .mini-modal.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
 .mini-modal-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .mini-modal-icon{
-  width:32px;height:32px;border-radius:9px;
-  background:rgba(255,0,0,.15);border:1px solid rgba(255,0,0,.4);
+  width:34px;height:34px;border-radius:10px;
+  background:rgba(255,0,0,.15);border:1px solid rgba(255,0,0,.5);
   display:flex;align-items:center;justify-content:center;
-  color:#ff4444;font-size:14px;flex-shrink:0
+  color:#ff4444;font-size:14px;flex-shrink:0;
+  box-shadow:0 0 12px rgba(255,0,0,.3)
 }
-.mini-modal-icon.spin-icon i{animation:iconSpin 1s linear infinite}
-.mini-modal-icon.done-icon{background:rgba(0,200,80,.15);border-color:rgba(0,200,80,.4);color:#6ee7b7}
+.mini-modal-icon.spin-icon i{animation:iconSpin .8s linear infinite}
+.mini-modal-icon.done-icon{
+  background:rgba(0,200,80,.15);border-color:rgba(0,200,80,.5);
+  color:#6ee7b7;box-shadow:0 0 12px rgba(0,200,80,.3)
+}
 @keyframes iconSpin{100%{transform:rotate(360deg)}}
 .mini-modal-title{font:800 12px Nunito,sans-serif;color:#ffcccc;flex:1}
-.mini-modal-status{font:700 10px 'JetBrains Mono',monospace;color:#884444}
+.mini-modal-status{
+  font:800 11px 'JetBrains Mono',monospace;
+  color:#ff4444;
+  text-shadow:0 0 8px rgba(255,0,0,.6)
+}
 .mini-modal-code{
-  background:rgba(0,0,0,.6);border:1px solid rgba(255,0,0,.15);
-  border-radius:10px;padding:8px 10px;max-height:70px;overflow:hidden;
-  font:10px 'JetBrains Mono',monospace
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,0,0,.15);
+  border-radius:10px;padding:8px 10px;max-height:72px;overflow:hidden;
+  font:10px 'JetBrains Mono',monospace;
+  position:relative
+}
+.mini-modal-code::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,0,0,.3),transparent)
 }
 .mini-line{padding:1px 0;line-height:1.5;white-space:nowrap;overflow:hidden}
 
-/* =================== SYSTEM GRAPH =================== */
+/* =================== SYSTEM GRAPH - VERTICAL LAYOUT =================== */
 .sysgraph{
   width:100%;max-width:540px;
-  background:rgba(12,0,0,.8);
-  border:1px solid rgba(255,0,0,.2);
-  border-radius:18px;padding:16px;margin-bottom:14px
+  background:rgba(12,0,0,.85);
+  border:1px solid rgba(255,0,0,.25);
+  border-radius:20px;padding:18px;margin-bottom:14px;
+  position:relative;overflow:hidden
+}
+.sysgraph::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,0,0,.5),transparent)
 }
 .sysgraph-title{
   font:800 12px Nunito,sans-serif;color:#ff4444;
   text-transform:uppercase;letter-spacing:1px;
-  display:flex;align-items:center;gap:8px;margin-bottom:14px
+  display:flex;align-items:center;gap:8px;margin-bottom:16px;
+  text-shadow:0 0 10px rgba(255,0,0,.4)
 }
-.sysgraph-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sysgraph-title i{
+  font-size:14px;
+  filter:drop-shadow(0 0 6px rgba(255,0,0,.8))
+}
+
+/* Vertical stacked layout */
+.sysgraph-grid{display:flex;flex-direction:column;gap:14px}
+
 .graph-card{
-  background:rgba(20,0,0,.6);border:1px solid rgba(255,0,0,.15);
-  border-radius:14px;padding:12px;position:relative;overflow:hidden
+  background:rgba(18,0,0,.7);border:1px solid rgba(255,0,0,.18);
+  border-radius:16px;padding:14px;position:relative;overflow:hidden;
+  transition:.3s
+}
+.graph-card:hover{
+  border-color:rgba(255,0,0,.4);
+  box-shadow:0 0 20px rgba(255,0,0,.1)
 }
 .graph-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
@@ -630,26 +765,68 @@ input:checked+.slider:before{
 }
 .graph-label{
   display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:8px
+  margin-bottom:12px
 }
-.graph-name{font:700 10px Nunito,sans-serif;color:#884444;text-transform:uppercase;letter-spacing:.8px}
-.graph-val{font:900 18px 'JetBrains Mono',monospace;color:#ff4444;text-shadow:0 0 10px rgba(255,0,0,.5)}
-.graph-unit{font:700 10px Nunito,sans-serif;color:#664444}
+.graph-name{
+  font:700 11px Nunito,sans-serif;color:#884444;
+  text-transform:uppercase;letter-spacing:.8px;
+  display:flex;align-items:center;gap:6px
+}
+.graph-name i{color:#ff4444;text-shadow:0 0 6px rgba(255,0,0,.6)}
+
+.graph-val-wrap{display:flex;align-items:baseline;gap:4px}
+.graph-val{
+  font:900 24px 'JetBrains Mono',monospace;color:#ff2222;
+  text-shadow:0 0 12px rgba(255,0,0,.7),0 0 24px rgba(255,0,0,.3);
+  animation:valPulse 2s ease-in-out infinite
+}
+@keyframes valPulse{
+  0%,100%{text-shadow:0 0 12px rgba(255,0,0,.7),0 0 24px rgba(255,0,0,.3)}
+  50%{text-shadow:0 0 18px rgba(255,0,0,.9),0 0 36px rgba(255,0,0,.5)}
+}
+.graph-unit{font:700 11px Nunito,sans-serif;color:#664444}
+
 canvas.graphCanvas{
-  width:100%;height:50px;display:block;
-  border-radius:6px;
-  background:rgba(0,0,0,.3)
+  width:100%;height:60px;display:block;
+  border-radius:8px;
+  background:rgba(0,0,0,.4);
+  margin-bottom:10px
 }
-.graph-bar-wrap{height:6px;background:rgba(30,0,0,.8);border-radius:5px;overflow:hidden;margin-top:6px}
+.graph-bar-wrap{
+  height:8px;background:rgba(20,0,0,.9);border-radius:6px;overflow:hidden;
+  border:1px solid rgba(255,0,0,.1);
+  position:relative
+}
 .graph-bar{
-  height:100%;border-radius:5px;
-  background:linear-gradient(90deg,#cc0000,#ff0000,#ff4444);
-  box-shadow:0 0 8px rgba(255,0,0,.6);
-  transition:width .8s cubic-bezier(.4,0,.2,1)
+  height:100%;border-radius:6px;
+  background:linear-gradient(90deg,#800000,#cc0000,#ff0000,#ff4444);
+  box-shadow:0 0 12px rgba(255,0,0,.7),0 0 4px rgba(255,100,100,.5);
+  transition:width .9s cubic-bezier(.4,0,.2,1);
+  position:relative
+}
+.graph-bar::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:4px;
+  background:rgba(255,180,180,.6);border-radius:0 4px 4px 0;
+  filter:blur(1px)
+}
+
+/* Graph footer stats */
+.graph-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:8px
+}
+.graph-stat{
+  font:700 10px 'JetBrains Mono',monospace;color:#553333;
+  display:flex;align-items:center;gap:4px
+}
+.graph-stat span{color:#884444}
+.graph-stat .dot-mini{
+  width:5px;height:5px;border-radius:50%;background:#ff4444;
+  animation:pulseRed 1s infinite;display:inline-block
 }
 
 /* =================== RESPONSIVE =================== */
-@media(max-width:560px){.stats{grid-template-columns:repeat(3,1fr)}.quick{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.stats{grid-template-columns:repeat(3,1fr)}.quick{grid-template-columns:repeat(3,1fr)}}
 
 /* scrollbar */
 ::-webkit-scrollbar{width:4px}
@@ -779,28 +956,48 @@ canvas.graphCanvas{
       </div>
     </div>
 
-    <!-- System graphs -->
+    <!-- System graphs - Vertical layout -->
     <div class="sysgraph">
       <div class="sysgraph-title">
-        <i class="fa-solid fa-chart-line" style="color:#ff4444"></i>
+        <i class="fa-solid fa-chart-line"></i>
         Giám sát hệ thống
       </div>
       <div class="sysgraph-grid">
+        <!-- CPU Card -->
         <div class="graph-card">
           <div class="graph-label">
-            <div class="graph-name"><i class="fa-solid fa-microchip"></i> CPU</div>
-            <div><span class="graph-val" id="cpuVal">0</span><span class="graph-unit">%</span></div>
+            <div class="graph-name"><i class="fa-solid fa-microchip"></i> CPU Usage</div>
+            <div class="graph-val-wrap">
+              <span class="graph-val" id="cpuVal">0</span>
+              <span class="graph-unit">%</span>
+            </div>
           </div>
-          <canvas class="graphCanvas" id="cpuCanvas" width="200" height="50"></canvas>
+          <canvas class="graphCanvas" id="cpuCanvas" width="460" height="60"></canvas>
           <div class="graph-bar-wrap"><div class="graph-bar" id="cpuBar" style="width:0%"></div></div>
+          <div class="graph-footer">
+            <div class="graph-stat"><span class="dot-mini"></span><span>LIVE</span></div>
+            <div class="graph-stat">MIN <span id="cpuMin">0</span>%</div>
+            <div class="graph-stat">MAX <span id="cpuMax">0</span>%</div>
+            <div class="graph-stat">AVG <span id="cpuAvg">0</span>%</div>
+          </div>
         </div>
+        <!-- RAM Card -->
         <div class="graph-card">
           <div class="graph-label">
-            <div class="graph-name"><i class="fa-solid fa-memory"></i> RAM</div>
-            <div><span class="graph-val" id="ramVal">0</span><span class="graph-unit">%</span></div>
+            <div class="graph-name"><i class="fa-solid fa-memory"></i> RAM Usage</div>
+            <div class="graph-val-wrap">
+              <span class="graph-val" id="ramVal">0</span>
+              <span class="graph-unit">%</span>
+            </div>
           </div>
-          <canvas class="graphCanvas" id="ramCanvas" width="200" height="50"></canvas>
+          <canvas class="graphCanvas" id="ramCanvas" width="460" height="60"></canvas>
           <div class="graph-bar-wrap"><div class="graph-bar" id="ramBar" style="width:0%"></div></div>
+          <div class="graph-footer">
+            <div class="graph-stat"><span class="dot-mini"></span><span>LIVE</span></div>
+            <div class="graph-stat">MIN <span id="ramMin">0</span>%</div>
+            <div class="graph-stat">MAX <span id="ramMax">0</span>%</div>
+            <div class="graph-stat">AVG <span id="ramAvg">0</span>%</div>
+          </div>
         </div>
       </div>
     </div>
@@ -810,7 +1007,6 @@ canvas.graphCanvas{
       <div class="q" data-qa="all"><i class="fa-solid fa-power-off"></i><span>Bật tất cả</span></div>
       <div class="q" data-qa="refresh"><i class="fa-solid fa-rotate"></i><span>Làm mới</span></div>
       <div class="q" data-qa="portal"><i class="fa-solid fa-link"></i><span>Portal key</span></div>
-      <div class="q" data-qa="admin"><i class="fa-solid fa-gear"></i><span>Admin</span></div>
     </div>
 
     <div class="section"><i class="fa-solid fa-sliders" style="color:#ff4444"></i> Function home</div>
@@ -869,6 +1065,7 @@ canvas.graphCanvas{
           <div class="h">Kết nối máy chủ</div>
           <div class="d">Thiết lập phiên bảo mật...</div>
         </div>
+        <div class="step-status" id="ss1">WAIT</div>
       </div>
       <div class="step" id="s2">
         <div class="sico"><i class="fa-solid fa-key"></i></div>
@@ -876,6 +1073,7 @@ canvas.graphCanvas{
           <div class="h">Xác thực key</div>
           <div class="d">Kiểm tra trạng thái key...</div>
         </div>
+        <div class="step-status" id="ss2">WAIT</div>
       </div>
       <div class="step" id="s3">
         <div class="sico"><i class="fa-solid fa-mobile-screen-button"></i></div>
@@ -883,6 +1081,7 @@ canvas.graphCanvas{
           <div class="h">Xác minh thiết bị</div>
           <div class="d">Kiểm tra quyền truy cập...</div>
         </div>
+        <div class="step-status" id="ss3">WAIT</div>
       </div>
       <div class="step" id="s4">
         <div class="sico"><i class="fa-solid fa-rocket"></i></div>
@@ -890,6 +1089,7 @@ canvas.graphCanvas{
           <div class="h">Khởi động dashboard</div>
           <div class="d">Nạp cấu hình portal...</div>
         </div>
+        <div class="step-status" id="ss4">WAIT</div>
       </div>
     </div>
     <div class="pwrap">
@@ -963,25 +1163,6 @@ function getOrCreateDeviceId() {
   id = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
   localStorage.setItem(CONFIG.deviceStorageKey, id);
   return id;
-}
-
-function toast(msg, color = '#ff4444') {
-  const el = document.createElement('div');
-  el.style.cssText = `
-    position:fixed;top:72px;left:50%;transform:translateX(-50%) scale(.9);
-    z-index:200;
-    background:linear-gradient(135deg,rgba(15,0,0,.98),rgba(25,5,5,.96));
-    border:1.5px solid rgba(255,0,0,.45);
-    color:#e2e8f0;padding:11px 18px;border-radius:14px;
-    font:800 12px Nunito,sans-serif;
-    box-shadow:0 0 20px rgba(255,0,0,.3),0 8px 30px rgba(0,0,0,.5);
-    opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);
-    white-space:nowrap
-  `;
-  el.innerHTML = `<span style="color:${color};margin-right:8px;text-shadow:0 0 6px ${color}">●</span>${msg}`;
-  document.body.appendChild(el);
-  setTimeout(() => { el.style.transform = 'translateX(-50%) scale(1)'; el.style.opacity = '1'; }, 20);
-  setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateX(-50%) scale(.9)'; setTimeout(() => el.remove(), 300); }, 2600);
 }
 
 async function api(url, options = {}) {
@@ -1135,11 +1316,9 @@ function toggleFeature(input) {
     row.classList.add('on');
     pill.textContent = 'ON';
     showMiniModal(features[index - 1][0]);
-    toast(`${features[index - 1][0]} đã kích hoạt`, '#6ee7b7');
   } else {
     row.classList.remove('on');
     pill.textContent = 'OFF';
-    toast(`${features[index - 1][0]} đã tắt`, '#ff6666');
   }
   updateCount();
 }
@@ -1205,6 +1384,7 @@ async function loadStatus() {
 function showCheck(success, failMessage) {
   const bg = $('checkBg');
   const steps = ['s1', 's2', 's3', 's4'].map((id) => $(id));
+  const statuses = ['ss1', 'ss2', 'ss3', 'ss4'].map((id) => $(id));
   const fill = $('checkFill');
   const pct = $('checkPct');
   const title = $('checkTitle');
@@ -1212,26 +1392,33 @@ function showCheck(success, failMessage) {
   const result = $('checkResult');
   const icon = $('checkIcon');
 
-  steps.forEach((step) => step.classList.remove('active', 'done'));
+  steps.forEach((step) => step.classList.remove('active', 'done', 'done-success'));
+  statuses.forEach((s) => { s.textContent = 'WAIT'; });
   fill.style.width = '0%';
   pct.textContent = '0%';
   result.textContent = '';
   result.style.color = '#884444';
   title.textContent = 'Đang xác minh key';
   sub.textContent = 'Vui lòng đợi trong giây lát...';
+  icon.className = 'modicon';
   icon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
   bg.classList.add('show');
 
   const times = [350, 1100, 1900, 2700];
+  const pcts = [20, 45, 75, 100];
+
   times.forEach((time, index) => {
     setTimeout(() => {
       if (index > 0) steps[index - 1].classList.remove('active');
       steps[index].classList.add('active');
+      statuses[index].textContent = 'RUN';
+
       setTimeout(() => {
         steps[index].classList.remove('active');
         steps[index].classList.add('done');
-        fill.style.width = [20, 45, 75, 100][index] + '%';
-        pct.textContent = [20, 45, 75, 100][index] + '%';
+        statuses[index].textContent = 'OK';
+        fill.style.width = pcts[index] + '%';
+        pct.textContent = pcts[index] + '%';
       }, 420);
     }, time);
   });
@@ -1240,14 +1427,17 @@ function showCheck(success, failMessage) {
     if (success) {
       title.textContent = 'Xác minh thành công';
       sub.textContent = 'Key hợp lệ — đang vào dashboard...';
-      icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#6ee7b7"></i>';
+      icon.className = 'modicon success-icon';
+      icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
       result.textContent = 'Đăng nhập thành công';
       result.style.color = '#6ee7b7';
+      steps.forEach((step) => step.classList.add('done-success'));
       setTimeout(() => bg.classList.remove('show'), 1100);
     } else {
       title.textContent = 'Xác minh thất bại';
       sub.textContent = 'Key không hợp lệ';
-      icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:#ff6666"></i>';
+      icon.className = 'modicon fail-icon';
+      icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
       result.textContent = failMessage || 'Key không hợp lệ';
       result.style.color = '#ff6666';
       setTimeout(() => bg.classList.remove('show'), 1500);
@@ -1298,7 +1488,6 @@ function startWatcher(key) {
       $('errText').textContent = error.message;
       localStorage.removeItem(CONFIG.sessionStorageKey);
       localStorage.removeItem(CONFIG.sessionDataKey);
-      toast(error.message, '#ff6666');
     }
   }, CONFIG.watcherMs);
 }
@@ -1357,7 +1546,6 @@ function logout() {
   $('keyInput').value = '';
   $('strength').classList.remove('show');
   showScreen('loginScreen');
-  toast('Đã đăng xuất', '#ff6666');
 }
 
 function setupLogin() {
@@ -1405,7 +1593,6 @@ function setupLogin() {
   });
 
   $('freeKeyBtn').onclick = () => {
-    toast('Đang mở trang lấy key free...', '#6ee7b7');
     setTimeout(() => window.open(CONFIG.freeKeyPath, '_blank'), 180);
   };
 }
@@ -1424,15 +1611,11 @@ function setupQuick() {
       if (key === 'refresh') {
         loadNotifications();
         loadStatus();
-        toast('Đã làm mới cấu hình', '#67e8f9');
         return;
       }
       if (key === 'portal') {
         window.open(CONFIG.freeKeyPath, '_blank');
         return;
-      }
-      if (key === 'admin') {
-        window.open(CONFIG.adminPath, '_blank');
       }
     };
   });
@@ -1459,7 +1642,6 @@ function runModule() {
   if (state.moduleRunning) {
     addTerminalLine('<span class="tc-muted">[STOP]</span> <span class="tc-red">Module bị dừng bởi người dùng.</span>', 0);
     stopModule();
-    toast('Module đã dừng', '#ff6666');
     return;
   }
 
@@ -1533,7 +1715,6 @@ function runModule() {
     state.moduleRunning = false;
     $('runIcon').className = 'fa-solid fa-rotate-right';
     $('runLabel').textContent = 'Chạy lại';
-    toast('Module V4 hoàn thành 🔥', '#ff4444');
   }, 30000);
   state.moduleTimeouts.push(finalId);
 }
@@ -1602,7 +1783,6 @@ function initBackground() {
   const ctx = canvas.getContext('2d');
   let width, height;
   const points = [];
-  const connections = [];
 
   function resize() {
     width = canvas.width = innerWidth;
@@ -1694,8 +1874,10 @@ function initBackground() {
 const cpuHistory = new Array(40).fill(0);
 const ramHistory = new Array(40).fill(0);
 let cpuVal = 20, ramVal = 35;
+let cpuMin = 100, cpuMax = 0, cpuSum = 0, cpuCount = 0;
+let ramMin = 100, ramMax = 0, ramSum = 0, ramCount = 0;
 
-function drawGraph(canvas, history, color1, color2) {
+function drawGraph(canvas, history, color1) {
   const ctx = canvas.getContext('2d');
   const w = canvas.width;
   const h = canvas.height;
@@ -1703,16 +1885,17 @@ function drawGraph(canvas, history, color1, color2) {
 
   if (history.length < 2) return;
 
-  // Fill area
+  // Gradient fill
   const grad = ctx.createLinearGradient(0, 0, 0, h);
-  grad.addColorStop(0, color1.replace(')', ', 0.4)').replace('rgb', 'rgba'));
-  grad.addColorStop(1, color1.replace(')', ', 0)').replace('rgb', 'rgba'));
+  grad.addColorStop(0, color1.replace('rgb(', 'rgba(').replace(')', ', 0.45)'));
+  grad.addColorStop(0.6, color1.replace('rgb(', 'rgba(').replace(')', ', 0.12)'));
+  grad.addColorStop(1, color1.replace('rgb(', 'rgba(').replace(')', ', 0)'));
 
   ctx.beginPath();
   ctx.moveTo(0, h);
   history.forEach((val, i) => {
     const x = (i / (history.length - 1)) * w;
-    const y = h - (val / 100) * h;
+    const y = h - (val / 100) * (h - 4) - 2;
     if (i === 0) ctx.lineTo(x, y);
     else ctx.lineTo(x, y);
   });
@@ -1721,19 +1904,39 @@ function drawGraph(canvas, history, color1, color2) {
   ctx.fillStyle = grad;
   ctx.fill();
 
-  // Line
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,0,0,0.06)';
+  ctx.lineWidth = 0.5;
+  for (let g = 25; g <= 75; g += 25) {
+    const gy = h - (g / 100) * (h - 4) - 2;
+    ctx.beginPath();
+    ctx.moveTo(0, gy);
+    ctx.lineTo(w, gy);
+    ctx.stroke();
+  }
+
+  // Line with glow
   ctx.beginPath();
   ctx.strokeStyle = color1;
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 2;
   ctx.shadowColor = color1;
-  ctx.shadowBlur = 4;
+  ctx.shadowBlur = 6;
   history.forEach((val, i) => {
     const x = (i / (history.length - 1)) * w;
-    const y = h - (val / 100) * h;
+    const y = h - (val / 100) * (h - 4) - 2;
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   });
   ctx.stroke();
+
+  // Dot at latest point
+  const lastX = w;
+  const lastY = h - (history[history.length - 1] / 100) * (h - 4) - 2;
+  ctx.beginPath();
+  ctx.arc(lastX, lastY, 3, 0, Math.PI * 2);
+  ctx.fillStyle = color1;
+  ctx.shadowBlur = 12;
+  ctx.fill();
   ctx.shadowBlur = 0;
 }
 
@@ -1746,6 +1949,16 @@ function updateSystemGraph() {
   ramHistory.push(ramVal);
   ramHistory.shift();
 
+  // Stats tracking
+  cpuMin = Math.min(cpuMin, cpuVal);
+  cpuMax = Math.max(cpuMax, cpuVal);
+  cpuSum += cpuVal;
+  cpuCount++;
+  ramMin = Math.min(ramMin, ramVal);
+  ramMax = Math.max(ramMax, ramVal);
+  ramSum += ramVal;
+  ramCount++;
+
   const cpuValEl = $('cpuVal');
   const ramValEl = $('ramVal');
   if (cpuValEl) cpuValEl.textContent = Math.round(cpuVal);
@@ -1756,17 +1969,31 @@ function updateSystemGraph() {
   if (cpuBarEl) cpuBarEl.style.width = cpuVal + '%';
   if (ramBarEl) ramBarEl.style.width = ramVal + '%';
 
+  // Stats
+  const cpuMinEl = $('cpuMin');
+  const cpuMaxEl = $('cpuMax');
+  const cpuAvgEl = $('cpuAvg');
+  const ramMinEl = $('ramMin');
+  const ramMaxEl = $('ramMax');
+  const ramAvgEl = $('ramAvg');
+  if (cpuMinEl) cpuMinEl.textContent = Math.round(cpuMin);
+  if (cpuMaxEl) cpuMaxEl.textContent = Math.round(cpuMax);
+  if (cpuAvgEl) cpuAvgEl.textContent = Math.round(cpuSum / cpuCount);
+  if (ramMinEl) ramMinEl.textContent = Math.round(ramMin);
+  if (ramMaxEl) ramMaxEl.textContent = Math.round(ramMax);
+  if (ramAvgEl) ramAvgEl.textContent = Math.round(ramSum / ramCount);
+
   const cpuCanvas = $('cpuCanvas');
   const ramCanvas = $('ramCanvas');
   if (cpuCanvas) {
-    cpuCanvas.width = cpuCanvas.offsetWidth || 160;
-    cpuCanvas.height = 50;
-    drawGraph(cpuCanvas, cpuHistory, 'rgb(255,0,0)', 'rgb(200,0,0)');
+    cpuCanvas.width = cpuCanvas.offsetWidth || 460;
+    cpuCanvas.height = 60;
+    drawGraph(cpuCanvas, cpuHistory, 'rgb(255,0,0)');
   }
   if (ramCanvas) {
-    ramCanvas.width = ramCanvas.offsetWidth || 160;
-    ramCanvas.height = 50;
-    drawGraph(ramCanvas, ramHistory, 'rgb(255,80,0)', 'rgb(200,50,0)');
+    ramCanvas.width = ramCanvas.offsetWidth || 460;
+    ramCanvas.height = 60;
+    drawGraph(ramCanvas, ramHistory, 'rgb(255,80,0)');
   }
 }
 
