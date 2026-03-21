@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "appName": "VIP PRO LICENSE PORTAL V4",
+    "badge": "FREE TRIAL 5 GIỜ",
+    "notifications": [
+      {
+        "id": "n1",
+        "type": "info",
+        "title": "Portal hoạt động",
+        "message": "Mỗi thiết bị có thể nhận 1 key free 5 giờ sau khi hoàn tất link trung gian.",
+        "createdAt": 1774041000000
+      },
+      {
+        "id": "n2",
+        "type": "success",
+        "title": "Admin riêng",
+        "message": "Admin quản lý key, thiết bị và thông báo tại trang riêng hoặc Telegram bot.",
+        "createdAt": 1774044600000
+      }
+    ]
+  },
+  "freeSessions": {},
+  "keys": {},
+  "botSessions": {},
+  "adminAudit": []
+}
