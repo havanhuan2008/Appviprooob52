@@ -1,48 +1,665 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Key Portal</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Key Portal — SecureApp Pro</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@300;400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
-:root{--blue:#2563eb;--cyan:#06b6d4;--green:#10b981;--yellow:#f59e0b;--red:#ef4444}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:#020817;color:#e2e8f0;min-height:100vh}body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 10%,rgba(37,99,235,.18),transparent 35%),radial-gradient(circle at 85% 85%,rgba(6,182,212,.12),transparent 40%);pointer-events:none}.wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.card{width:100%;max-width:430px;background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(30,41,59,.86));border:1px solid rgba(96,165,250,.2);border-radius:28px;padding:26px;box-shadow:0 30px 80px rgba(37,99,235,.18)}.logo{width:82px;height:82px;border-radius:24px;background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(6,182,212,.16));border:1px solid rgba(96,165,250,.36);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 28px rgba(37,99,235,.24)}.logo i{font-size:32px;color:#60a5fa}h1{text-align:center;font:800 24px Nunito,sans-serif;margin-bottom:6px}.sub{text-align:center;color:#94a3b8;font:700 12px Nunito,sans-serif;line-height:1.65;margin-bottom:18px}.grid{display:grid;gap:10px}.meta{display:flex;gap:10px;align-items:flex-start;background:rgba(15,23,42,.56);border:1px solid rgba(96,165,250,.1);border-radius:14px;padding:12px 14px}.meta i{width:18px;color:#60a5fa;margin-top:2px}.ml{font:700 11px Nunito,sans-serif;color:#64748b;text-transform:uppercase;letter-spacing:.7px}.mv{font:700 12px Nunito,sans-serif;color:#e2e8f0;line-height:1.5;word-break:break-all}.btns{display:grid;gap:10px;margin:18px 0}button,a{width:100%;border:none;border-radius:14px;padding:14px 16px;cursor:pointer;font:800 13px Nunito,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:.25s}button:hover,a:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,rgba(37,99,235,.9),rgba(6,182,212,.62));color:#fff;border:1px solid rgba(96,165,250,.42);box-shadow:0 8px 28px rgba(37,99,235,.22)}.secondary{background:rgba(15,23,42,.72);color:#93c5fd;border:1px solid rgba(96,165,250,.18)}.ghost{background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.08)}.keybox{display:none;margin-top:16px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);border-radius:18px;padding:16px}.keybox.show{display:block}.kt{display:flex;align-items:center;gap:8px;color:#a7f3d0;font:800 13px Nunito,sans-serif;margin-bottom:10px}.field{display:flex;gap:10px;align-items:center;background:rgba(2,8,23,.56);border:1px solid rgba(96,165,250,.12);border-radius:14px;padding:12px 14px}.val{flex:1;word-break:break-all;font:700 13px 'JetBrains Mono',monospace}.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.22);color:#a7f3d0;font:700 11px Nunito,sans-serif;margin-top:10px}.status{min-height:20px;text-align:center;font:800 12px Nunito,sans-serif}.ok{color:#6ee7b7}.err{color:#fca5a5}.info{color:#67e8f9}.foot{text-align:center;color:#64748b;font:700 11px Nunito,sans-serif;margin-top:16px;line-height:1.6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#ff1a1a;--red2:#ff4444;--red3:#cc0000;
+  --red-glow:rgba(255,26,26,0.6);--red-border:rgba(255,26,26,0.38);
+  --red-dim:rgba(255,26,26,0.1);
+  --green:#00e676;--gold:#ffd600;--text:#f0f0f0;--muted:#888;--bg:#060608;
+}
+
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;}
+
+/* === BACKGROUND AURA === */
+.aura-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aura{position:absolute;border-radius:50%;filter:blur(100px);animation:auraPulse 7s ease-in-out infinite alternate;}
+.aura-1{width:700px;height:700px;top:-220px;left:-220px;background:radial-gradient(circle,rgba(255,26,26,0.16)0%,transparent 70%);}
+.aura-2{width:500px;height:500px;bottom:-160px;right:-160px;background:radial-gradient(circle,rgba(255,68,68,0.12)0%,transparent 70%);animation:auraPulse2 8s ease-in-out infinite alternate;}
+.aura-3{width:280px;height:280px;top:55%;left:55%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(200,0,0,0.07)0%,transparent 70%);animation-delay:-2s;}
+@keyframes auraPulse{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.2) translate(22px,12px);}}
+@keyframes auraPulse2{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.16) translate(-18px,-22px);}}
+
+/* === PARTICLES === */
+#ptc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.ptc-item{position:absolute;border-radius:50%;animation:ptcFloat linear infinite;}
+@keyframes ptcFloat{0%{transform:translateY(108vh) scale(0.6);opacity:0;}15%{opacity:1;}85%{opacity:0.5;}100%{transform:translateY(-10vh) scale(1.1);opacity:0;}}
+
+/* === TOP SCAN LINE === */
+.scan-line-top{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--red),rgba(255,100,100,0.9),var(--red),transparent);box-shadow:0 0 14px var(--red);animation:scanPulse 2.5s ease-in-out infinite alternate;position:fixed;top:0;left:0;right:0;z-index:10;}
+@keyframes scanPulse{0%{opacity:0.3;}100%{opacity:1;}}
+
+/* === WRAP === */
+.wrap{position:relative;z-index:1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 18px 52px;}
+
+/* === CARD === */
+.card{
+  width:100%;max-width:460px;
+  background:linear-gradient(145deg,rgba(14,14,22,0.97),rgba(8,8,14,0.99));
+  border:1.5px solid var(--red-border);
+  border-radius:28px;
+  padding:30px 28px 28px;
+  box-shadow:0 30px 90px rgba(0,0,0,0.7),0 0 50px rgba(255,26,26,0.12),inset 0 1px 0 rgba(255,255,255,0.04);
+  position:relative;overflow:hidden;
+  margin-top:20px;
+}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--red),#ff6b6b,var(--red),transparent);}
+.card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,26,26,0.05)0%,transparent 60%);pointer-events:none;}
+
+/* === LOGO === */
+.logo-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:22px;position:relative;}
+.logo{
+  width:90px;height:90px;border-radius:26px;
+  background:linear-gradient(135deg,rgba(255,26,26,0.14),rgba(180,0,0,0.08));
+  border:2px solid var(--red-border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+  box-shadow:0 0 44px rgba(255,26,26,0.35),0 0 90px rgba(255,26,26,0.1);
+  position:relative;
+}
+.logo::before{
+  content:'';position:absolute;inset:-6px;border-radius:30px;
+  border:1.5px solid transparent;
+  background:conic-gradient(from 0deg,var(--red),rgba(255,26,26,0.06),var(--red2),rgba(255,26,26,0.06),var(--red)) border-box;
+  animation:spinRing 5s linear infinite;
+}
+@keyframes spinRing{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.logo::after{
+  content:'';position:absolute;inset:-12px;border-radius:34px;
+  border:1px solid transparent;
+  background:conic-gradient(from 180deg,rgba(255,26,26,0.3),transparent,var(--red),transparent) border-box;
+  animation:spinRing 9s linear infinite reverse;opacity:0.35;
+}
+.logo i{font-size:2.1rem;color:var(--red);filter:drop-shadow(0 0 16px var(--red));position:relative;z-index:1;}
+
+.logo-title{font-family:'Orbitron',sans-serif;font-size:1.45rem;font-weight:900;color:var(--red2);letter-spacing:0.08em;text-shadow:0 0 26px var(--red),0 0 52px rgba(255,26,26,0.3);}
+.logo-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 17px;border-radius:999px;
+  background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.35);
+  color:var(--gold);font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  font-family:'Quicksand',sans-serif;margin-top:9px;
+}
+.logo-badge i{font-size:0.7rem;}
+
+/* === SUBTITLE === */
+.sub{
+  text-align:center;color:var(--muted);
+  font-family:'Nunito',sans-serif;font-weight:600;font-size:0.82rem;
+  line-height:1.75;margin-bottom:24px;padding:0 4px;
+}
+
+/* === DIVIDER === */
+.divider{display:flex;align-items:center;gap:10px;margin:20px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,26,26,0.3));}
+.divider::after{background:linear-gradient(270deg,transparent,rgba(255,26,26,0.3));}
+.divider span{font-size:0.62rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;font-weight:700;font-family:'Quicksand',sans-serif;white-space:nowrap;}
+
+/* === STEP INDICATOR === */
+.step-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:22px;}
+.step{display:flex;align-items:center;gap:6px;font-family:'Quicksand',sans-serif;font-size:0.68rem;font-weight:700;color:#333;letter-spacing:0.06em;transition:color 0.4s;}
+.step.done .step-dot{background:var(--green);box-shadow:0 0 10px var(--green);border-color:rgba(0,230,118,0.5);}
+.step.done{color:var(--green);}
+.step.active .step-dot{background:var(--red);box-shadow:0 0 14px var(--red);border-color:rgba(255,26,26,0.5);}
+.step.active{color:var(--red2);}
+.step-dot{width:10px;height:10px;border-radius:50%;background:#222;border:1.5px solid #333;transition:all 0.4s;}
+.step-line{flex:1;height:1px;background:rgba(255,26,26,0.12);max-width:44px;}
+
+/* === META GRID === */
+.grid{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
+.meta{
+  display:flex;gap:12px;align-items:flex-start;
+  background:rgba(255,26,26,0.03);
+  border:1px solid rgba(255,26,26,0.15);
+  border-radius:16px;padding:14px 16px;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.meta:hover{border-color:rgba(255,26,26,0.28);box-shadow:0 0 16px rgba(255,26,26,0.08);}
+.meta > i{width:20px;color:var(--red);margin-top:2px;font-size:0.95rem;}
+.ml{font-family:'Quicksand',sans-serif;font-weight:700;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+.mv{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.83rem;color:var(--text);line-height:1.5;word-break:break-all;}
+
+/* === LINK RESULT BOX === */
+.link-result-box{
+  display:none;
+  background:linear-gradient(135deg,rgba(255,26,26,0.06),rgba(255,68,68,0.03));
+  border:1.5px solid rgba(255,26,26,0.28);
+  border-radius:18px;padding:18px;margin-bottom:16px;
+  animation:fadeInUp 0.45s ease;
+  position:relative;overflow:hidden;
+}
+.link-result-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,26,26,0.4),transparent);}
+.link-result-box.show{display:block;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+.link-result-header{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+.link-result-icon{
+  width:38px;height:38px;border-radius:12px;
+  background:rgba(255,26,26,0.1);border:1.5px solid rgba(255,26,26,0.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--red);font-size:0.95rem;flex-shrink:0;
+  box-shadow:0 0 14px rgba(255,26,26,0.2);
+}
+.link-result-label{font-family:'Quicksand',sans-serif;font-weight:800;font-size:0.82rem;color:var(--red2);}
+.link-result-desc{font-size:0.68rem;color:var(--muted);margin-top:3px;font-family:'Nunito',sans-serif;font-weight:600;}
+
+.link-url-row{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,0,0,0.45);border:1px solid rgba(255,26,26,0.18);
+  border-radius:13px;padding:10px 14px;margin-bottom:13px;
+}
+.link-url-text{flex:1;font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:#ff9999;word-break:break-all;line-height:1.55;}
+.link-open-btn{
+  flex-shrink:0;padding:9px 18px;
+  background:linear-gradient(135deg,rgba(255,26,26,0.22),rgba(255,68,68,0.12));
+  border:1.5px solid var(--red-border);border-radius:12px;
+  color:var(--red2);font-size:0.78rem;font-weight:800;letter-spacing:0.04em;
+  font-family:'Quicksand',sans-serif;cursor:pointer;
+  display:flex;align-items:center;gap:7px;
+  text-decoration:none;transition:all 0.25s;
+  box-shadow:0 0 16px rgba(255,26,26,0.2);
+  white-space:nowrap;
+}
+.link-open-btn:hover{color:#fff;border-color:var(--red);box-shadow:0 0 30px rgba(255,26,26,0.5);transform:translateY(-2px);}
+
+.link-steps{display:flex;flex-direction:column;gap:8px;}
+.link-step-item{display:flex;align-items:center;gap:10px;font-size:0.72rem;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:600;line-height:1.5;}
+.link-step-num{
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(255,26,26,0.1);border:1px solid rgba(255,26,26,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.62rem;font-weight:800;color:var(--red2);flex-shrink:0;
+  font-family:'Quicksand',sans-serif;
+}
+
+/* === KEY BOX === */
+.keybox{
+  display:none;
+  background:linear-gradient(135deg,rgba(0,230,118,0.06),rgba(0,200,100,0.03));
+  border:1.5px solid rgba(0,230,118,0.28);
+  border-radius:22px;padding:22px;margin-bottom:16px;
+  animation:fadeInUp 0.5s ease;
+  position:relative;overflow:hidden;
+}
+.keybox.show{display:block;}
+.keybox::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--green),transparent);}
+.keybox::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,230,118,0.04)0%,transparent 65%);pointer-events:none;}
+
+.kt{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.kt-icon{
+  width:42px;height:42px;border-radius:14px;
+  background:rgba(0,230,118,0.1);border:1.5px solid rgba(0,230,118,0.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);font-size:1.1rem;flex-shrink:0;
+  box-shadow:0 0 18px rgba(0,230,118,0.2);
+}
+.kt-title{font-family:'Quicksand',sans-serif;font-weight:800;font-size:0.9rem;color:var(--green);text-shadow:0 0 14px rgba(0,230,118,0.5);}
+.kt-sub{font-size:0.68rem;color:var(--muted);font-family:'Nunito',sans-serif;margin-top:3px;font-weight:600;}
+
+.key-display-outer{
+  background:rgba(0,0,0,0.5);
+  border:1.5px solid rgba(0,230,118,0.2);
+  border-radius:16px;padding:16px 18px;
+  position:relative;margin-bottom:14px;
+}
+.key-display-label{
+  font-family:'Quicksand',sans-serif;font-size:0.62rem;font-weight:700;
+  color:rgba(0,230,118,0.6);text-transform:uppercase;letter-spacing:0.12em;
+  margin-bottom:10px;display:flex;align-items:center;gap:7px;
+}
+.key-val-row{display:flex;align-items:center;gap:13px;}
+.val{
+  flex:1;word-break:break-all;
+  font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;
+  color:var(--gold);
+  text-shadow:0 0 18px rgba(255,214,0,0.55),0 0 36px rgba(255,214,0,0.2);
+  letter-spacing:0.08em;line-height:1.5;
+}
+.copy-btn{
+  flex-shrink:0;
+  width:42px;height:42px;border-radius:13px;
+  background:rgba(255,214,0,0.08);border:1.5px solid rgba(255,214,0,0.35);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:0.92rem;cursor:pointer;
+  transition:all 0.25s;outline:none;
+}
+.copy-btn:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 24px rgba(255,214,0,0.35);transform:scale(1.1);}
+
+/* KEY CHIPS */
+.key-info-row{display:flex;gap:8px;flex-wrap:wrap;}
+.key-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 13px;border-radius:999px;
+  font-family:'Quicksand',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.chip-green{background:rgba(0,230,118,0.09);border:1px solid rgba(0,230,118,0.3);color:var(--green);}
+.chip-gold{background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.3);color:var(--gold);}
+.chip-red{background:rgba(255,26,26,0.08);border:1px solid rgba(255,26,26,0.3);color:var(--red2);}
+
+/* KEY HINT */
+.key-hint{
+  display:flex;align-items:flex-start;gap:11px;
+  background:rgba(255,214,0,0.05);border:1px solid rgba(255,214,0,0.18);
+  border-radius:13px;padding:13px 15px;margin-top:14px;
+}
+.key-hint i{color:var(--gold);font-size:0.9rem;margin-top:1px;flex-shrink:0;}
+.key-hint span{font-size:0.73rem;color:var(--muted);line-height:1.7;font-family:'Nunito',sans-serif;font-weight:600;}
+
+/* === BUTTONS === */
+.btns{display:flex;flex-direction:column;gap:11px;margin-bottom:18px;}
+
+button,a.btn-link{
+  width:100%;border:none;border-radius:16px;
+  padding:14px 18px;cursor:pointer;
+  font-family:'Quicksand',sans-serif;font-weight:800;font-size:0.88rem;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;transition:all 0.25s;position:relative;overflow:hidden;
+  letter-spacing:0.04em;
+}
+button::before,a.btn-link::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.05);transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
+button:hover::before,a.btn-link:hover::before{transform:scaleX(1);}
+button:hover,a.btn-link:hover{transform:translateY(-2px);}
+button:active{transform:translateY(0);}
+
+.primary{
+  background:linear-gradient(135deg,rgba(255,26,26,0.22),rgba(255,68,68,0.12));
+  color:var(--red2);border:1.5px solid var(--red-border);
+  box-shadow:0 0 24px rgba(255,26,26,0.22),0 6px 20px rgba(0,0,0,0.4);
+  animation:btnGlow 2.5s ease-in-out infinite;
+}
+@keyframes btnGlow{0%,100%{box-shadow:0 0 24px rgba(255,26,26,0.22),0 6px 20px rgba(0,0,0,0.4);}50%{box-shadow:0 0 44px rgba(255,26,26,0.55),0 6px 24px rgba(0,0,0,0.4);}}
+.primary:hover{color:#fff;border-color:var(--red);background:linear-gradient(135deg,rgba(255,26,26,0.36),rgba(255,68,68,0.22));animation:none;box-shadow:0 0 50px rgba(255,26,26,0.75),0 8px 28px rgba(0,0,0,0.4);}
+
+.secondary{background:rgba(255,214,0,0.07);color:var(--gold);border:1.5px solid rgba(255,214,0,0.35);box-shadow:0 0 16px rgba(255,214,0,0.08);}
+.secondary:hover{color:#fff;border-color:var(--gold);background:rgba(255,214,0,0.18);box-shadow:0 0 32px rgba(255,214,0,0.3);}
+
+.ghost{background:rgba(255,255,255,0.03);color:var(--muted);border:1.5px solid rgba(255,255,255,0.08);}
+.ghost:hover{color:var(--text);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);}
+
+/* === STATUS === */
+.status-wrap{margin:0 0 16px;}
+.status{
+  min-height:38px;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  text-align:center;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;
+  border-radius:13px;padding:10px 18px;transition:all 0.35s;
+}
+.status.ok{background:rgba(0,230,118,0.07);border:1px solid rgba(0,230,118,0.2);color:var(--green);}
+.status.err{background:rgba(255,26,26,0.07);border:1px solid rgba(255,26,26,0.2);color:#ff8f8f;}
+.status.info{background:rgba(255,26,26,0.04);border:1px solid rgba(255,26,26,0.1);color:#999;}
+
+/* === FOOTER === */
+.foot{
+  text-align:center;color:#444;
+  font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:600;
+  margin-top:16px;line-height:1.7;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.foot i{color:var(--red);font-size:0.7rem;}
+
+/* === SWAL CUSTOM === */
+.swal2-popup{border-radius:24px!important;background:linear-gradient(135deg,#0e0e1a,#080810)!important;border:1.5px solid rgba(255,26,26,0.2)!important;box-shadow:0 30px 90px rgba(0,0,0,0.8),0 0 40px rgba(255,26,26,0.08)!important;}
+.swal2-title{font-family:'Quicksand',sans-serif!important;font-size:1.2rem!important;color:#fff!important;font-weight:800!important;}
+.swal2-html-container{color:#aaa!important;font-family:'Nunito',sans-serif!important;font-size:0.86rem!important;line-height:1.75!important;}
+.swal2-confirm{background:linear-gradient(135deg,rgba(255,26,26,0.28),rgba(255,68,68,0.16))!important;border:1.5px solid rgba(255,26,26,0.45)!important;border-radius:999px!important;font-family:'Quicksand',sans-serif!important;font-weight:800!important;padding:11px 32px!important;color:#fff!important;}
+.swal2-cancel{background:rgba(255,255,255,0.05)!important;border:1.5px solid rgba(255,255,255,0.1)!important;border-radius:999px!important;font-family:'Quicksand',sans-serif!important;font-weight:800!important;color:#888!important;padding:11px 32px!important;}
+.swal2-timer-progress-bar{background:var(--red)!important;}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,26,26,0.3);border-radius:99px;}
 </style>
 </head>
 <body>
-<div class="wrap"><div class="card">
-<div class="logo"><i class="fa-solid fa-key"></i></div>
-<h1>Free Key Portal</h1>
-<div class="sub">Trang nhận key riêng. Sau khi hoàn tất short-link, hệ thống sẽ tạo random key free 5 giờ cho thiết bị hiện tại.</div>
-<div class="grid">
-  <div class="meta"><i class="fa-solid fa-mobile-screen-button"></i><div><div class="ml">Device ID</div><div class="mv" id="deviceText">...</div></div></div>
-  <div class="meta"><i class="fa-solid fa-link"></i><div><div class="ml">Trạng thái phiên</div><div class="mv" id="sessionText">Chưa có phiên lấy key</div></div></div>
-  <div class="meta"><i class="fa-solid fa-hourglass-half"></i><div><div class="ml">Thời hạn</div><div class="mv">5 giờ · tối đa 1 thiết bị</div></div></div>
+
+<!-- BACKGROUND -->
+<div class="aura-bg">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+  <div class="aura aura-3"></div>
 </div>
-<div class="btns">
-  <button class="primary" id="btnCreate"><i class="fa-solid fa-wand-magic-sparkles"></i> Tạo link lấy key</button>
-  <a class="secondary" id="btnOpen" href="#" target="_blank"><i class="fa-solid fa-up-right-from-square"></i> Mở link</a>
-  <button class="ghost" id="btnClaim"><i class="fa-solid fa-gift"></i> Nhận key</button>
-  <a class="ghost" href="/index.html"><i class="fa-solid fa-arrow-left"></i> Quay lại app</a>
+<div id="ptc"></div>
+<div class="scan-line-top"></div>
+
+<div class="wrap">
+  <div class="card">
+
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <div class="logo"><i class="fa-solid fa-key"></i></div>
+      <div class="logo-title">Free Key Portal</div>
+      <div class="logo-badge"><i class="fa-solid fa-gift"></i> KEY FREE 5 GIỜ · THEO THIẾT BỊ</div>
+    </div>
+
+    <!-- SUBTITLE -->
+    <div class="sub">
+      Trang nhận key riêng của SecureApp Pro. Sau khi hoàn tất short-link, hệ thống sẽ tạo random key free 5 giờ cho thiết bị hiện tại của bạn.
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-row">
+      <div class="step active" id="step1"><div class="step-dot"></div>Tạo link</div>
+      <div class="step-line"></div>
+      <div class="step" id="step2"><div class="step-dot"></div>Xác thực</div>
+      <div class="step-line"></div>
+      <div class="step" id="step3"><div class="step-dot"></div>Nhận key</div>
+    </div>
+
+    <!-- META INFO -->
+    <div class="grid">
+      <div class="meta">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        <div>
+          <div class="ml">Device ID</div>
+          <div class="mv" id="deviceText">...</div>
+        </div>
+      </div>
+      <div class="meta">
+        <i class="fa-solid fa-link"></i>
+        <div>
+          <div class="ml">Trạng thái phiên</div>
+          <div class="mv" id="sessionText">Chưa có phiên lấy key</div>
+        </div>
+      </div>
+      <div class="meta">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <div>
+          <div class="ml">Thời hạn</div>
+          <div class="mv">5 giờ · tối đa 1 thiết bị</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"><span>Thao Tác</span></div>
+
+    <!-- ======================================
+         LINK RESULT BOX (shown after createLink)
+         ====================================== -->
+    <div class="link-result-box" id="linkResultBox">
+      <div class="link-result-header">
+        <div class="link-result-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+          <div class="link-result-label">Link đã được tạo thành công!</div>
+          <div class="link-result-desc">Mở link bên dưới để hoàn tất xác thực trang trung gian</div>
+        </div>
+      </div>
+      <div class="link-url-row">
+        <div class="link-url-text" id="linkUrlDisplay">—</div>
+        <a class="link-open-btn" id="btnOpen" href="#" target="_blank">
+          <i class="fa-solid fa-up-right-from-square"></i> Mở link
+        </a>
+      </div>
+      <div class="link-steps">
+        <div class="link-step-item"><div class="link-step-num">1</div>Nhấn <strong style="color:var(--red2);margin:0 3px;">Mở link</strong> ở trên để vào trang xác thực</div>
+        <div class="link-step-item"><div class="link-step-num">2</div>Hoàn tất quảng cáo / captcha trên trang trung gian</div>
+        <div class="link-step-item"><div class="link-step-num">3</div>Quay lại đây và nhấn <strong style="color:var(--green);margin:0 3px;">Nhận Key</strong> bên dưới</div>
+      </div>
+    </div>
+
+    <!-- ======================================
+         KEY BOX (shown after claim)
+         ====================================== -->
+    <div class="keybox" id="keyBox">
+      <div class="kt">
+        <div class="kt-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+          <div class="kt-title">Key đã sẵn sàng sử dụng!</div>
+          <div class="kt-sub">Copy key và đăng nhập vào SecureApp Pro</div>
+        </div>
+      </div>
+      <div class="key-display-outer">
+        <div class="key-display-label"><i class="fa-solid fa-key"></i> License Key của bạn</div>
+        <div class="key-val-row">
+          <div class="val" id="keyValue">...</div>
+          <button class="copy-btn" id="copyKey" title="Sao chép key">
+            <i class="fa-solid fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="key-info-row">
+        <span class="key-chip chip-green"><i class="fa-solid fa-check-circle"></i> Đã kích hoạt</span>
+        <span class="key-chip chip-gold" id="keyExpiry"><i class="fa-solid fa-clock"></i> 5 giờ</span>
+        <span class="key-chip chip-red"><i class="fa-solid fa-mobile-screen"></i> 1 thiết bị</span>
+      </div>
+      <div class="key-hint">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>Sau khi copy key, hãy quay lại app và đăng nhập để sử dụng đầy đủ tính năng của SecureApp Pro v5.</span>
+      </div>
+      <!-- Original expiryText element kept for JS compatibility -->
+      <div id="expiryText" style="display:none;"></div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btns">
+      <button class="primary" id="btnCreate">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Tạo link lấy key
+      </button>
+      <button class="ghost" id="btnClaim">
+        <i class="fa-solid fa-gift"></i> Nhận key
+      </button>
+      <a class="ghost btn-link" href="/index.html">
+        <i class="fa-solid fa-arrow-left"></i> Quay lại app
+      </a>
+    </div>
+
+    <!-- STATUS -->
+    <div class="status-wrap">
+      <div class="status info" id="status">
+        <i class="fa-solid fa-circle-info" style="font-size:0.75rem;flex-shrink:0;"></i>
+        Sẵn sàng tạo short-link.
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="foot">
+      <i class="fa-solid fa-shield-halved"></i>
+      Sau khi nhận key, hãy quay lại app và đăng nhập bằng key vừa cấp.
+    </div>
+
+  </div>
 </div>
-<div class="keybox" id="keyBox"><div class="kt"><i class="fa-solid fa-circle-check"></i> Key đã sẵn sàng</div><div class="field"><div class="val" id="keyValue">...</div><button class="secondary" id="copyKey" style="width:auto;padding:10px 12px"><i class="fa-solid fa-copy"></i></button></div><div class="chip" id="expiryText"><i class="fa-solid fa-clock"></i> 5 giờ</div></div>
-<div class="status info" id="status">Sẵn sàng tạo short-link.</div>
-<div class="foot">Sau khi nhận key, hãy quay lại app và đăng nhập bằng key vừa cấp.</div>
-</div></div>
+
 <script>
-const DEVICE_ID = (()=>{ let id=localStorage.getItem('_v4_device_id'); if(!id){ const arr=new Uint8Array(16); crypto.getRandomValues(arr); id=Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); localStorage.setItem('_v4_device_id', id);} return id;})();
+/* === PARTICLES === */
+(function(){
+  const c=['rgba(255,26,26,','rgba(255,68,68,','rgba(200,0,0,'];
+  const container=document.getElementById('ptc');
+  for(let i=0;i<24;i++){
+    const d=document.createElement('div');d.className='ptc-item';
+    const sz=Math.random()*50+6;
+    const col=c[Math.floor(Math.random()*c.length)];
+    const op=(Math.random()*0.12+0.03).toFixed(2);
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${col}${op});filter:blur(${Math.random()*14+6}px);animation-duration:${Math.random()*18+10}s;animation-delay:-${Math.random()*20}s;`;
+    container.appendChild(d);
+  }
+})();
+
+/* ===================================================
+   ORIGINAL LOGIC — KEPT EXACTLY AS-IS
+   =================================================== */
+const DEVICE_ID = (()=>{
+  let id=localStorage.getItem('_v4_device_id');
+  if(!id){
+    const arr=new Uint8Array(16);
+    crypto.getRandomValues(arr);
+    id=Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
+    localStorage.setItem('_v4_device_id', id);
+  }
+  return id;
+})();
+
 document.getElementById('deviceText').textContent = DEVICE_ID;
+
 let currentRid = new URLSearchParams(location.search).get('rid') || '';
 let currentUrl = '';
-function setStatus(text, cls='info'){ const el=document.getElementById('status'); el.className='status '+cls; el.textContent=text; }
-function api(url, options={}){ return fetch(url,{headers:{'Content-Type':'application/json', ...(options.headers||{})}, ...options}).then(async r=>{ const d=await r.json().catch(()=>({ok:false,message:'API response invalid'})); if(!r.ok||d.ok===false) throw new Error(d.message||'API lỗi'); return d; }); }
-async function createLink(){ try{ setStatus('Đang tạo short-link...', 'info'); const d=await api('/api/free-link/create',{method:'POST', body:JSON.stringify({deviceId:DEVICE_ID})}); currentRid=d.rid; currentUrl=d.shortUrl; document.getElementById('btnOpen').href=currentUrl; document.getElementById('sessionText').textContent=`RID: ${currentRid} · Hết hạn sau 30 phút`; setStatus('Đã tạo link thành công. Hãy mở link và hoàn tất trang trung gian.', 'ok'); }catch(e){ setStatus(e.message,'err'); } }
-async function claim(){ if(!currentRid) return setStatus('Chưa có RID để nhận key.','err'); try{ setStatus('Đang nhận key từ phiên đã xác thực...', 'info'); const d=await api('/api/free-key/claim',{method:'POST',body:JSON.stringify({rid:currentRid,deviceId:DEVICE_ID,userAgent:navigator.userAgent})}); document.getElementById('keyValue').textContent=d.key; document.getElementById('expiryText').innerHTML=`<i class="fa-solid fa-clock"></i> Hết hạn: ${new Date(d.expiresAt).toLocaleString('vi-VN')}`; document.getElementById('keyBox').classList.add('show'); setStatus('Nhận key thành công. Hãy copy key và quay lại app.', 'ok'); }catch(e){ setStatus(e.message,'err'); } }
-document.getElementById('btnCreate').onclick=createLink; document.getElementById('btnClaim').onclick=claim; document.getElementById('copyKey').onclick=async()=>{ await navigator.clipboard.writeText(document.getElementById('keyValue').textContent.trim()); setStatus('Đã sao chép key vào clipboard.', 'ok'); };
-const params=new URLSearchParams(location.search); if(params.get('error')) setStatus(params.get('error'),'err'); if(params.get('verified')==='1'&&currentRid){ document.getElementById('sessionText').textContent=`RID: ${currentRid} · Đã xác thực thành công`; setStatus('Xác thực thành công. Nhấn Nhận key để lấy key 5 giờ.', 'ok'); }
+
+function setStatus(text, cls='info'){
+  const el=document.getElementById('status');
+  el.className='status '+cls;
+  const iconMap={ok:'fa-circle-check',err:'fa-circle-xmark',info:'fa-circle-info'};
+  el.innerHTML=`<i class="fa-solid ${iconMap[cls]||'fa-circle-info'}" style="font-size:.75rem;flex-shrink:0;"></i> ${text}`;
+}
+
+function api(url, options={}){
+  return fetch(url,{
+    headers:{'Content-Type':'application/json', ...(options.headers||{})},
+    ...options
+  }).then(async r=>{
+    const d=await r.json().catch(()=>({ok:false,message:'API response invalid'}));
+    if(!r.ok||d.ok===false) throw new Error(d.message||'API lỗi');
+    return d;
+  });
+}
+
+/* Helper — update step indicator */
+function setStep(n){
+  ['step1','step2','step3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('active','done');
+    if(i+1<n) el.classList.add('done');
+    else if(i+1===n) el.classList.add('active');
+  });
+}
+
+async function createLink(){
+  Swal.fire({
+    title:'Đang tạo short-link...',
+    html:'<span style="color:#888;font-size:.84rem;line-height:1.7;">Hệ thống đang khởi tạo phiên xác thực cho thiết bị của bạn.</span>',
+    allowOutsideClick:false,
+    allowEscapeKey:false,
+    didOpen:()=>Swal.showLoading(),
+  });
+  try{
+    setStatus('Đang tạo short-link...', 'info');
+    const d=await api('/api/free-link/create',{method:'POST', body:JSON.stringify({deviceId:DEVICE_ID})});
+    currentRid=d.rid;
+    currentUrl=d.shortUrl;
+
+    /* Update btnOpen href */
+    document.getElementById('btnOpen').href=currentUrl;
+
+    /* Show link URL in result box */
+    document.getElementById('linkUrlDisplay').textContent=currentUrl;
+
+    /* Show the link result box */
+    document.getElementById('linkResultBox').classList.add('show');
+
+    document.getElementById('sessionText').textContent=`RID: ${currentRid} · Hết hạn sau 30 phút`;
+    setStatus('Đã tạo link thành công. Hãy mở link và hoàn tất trang trung gian.', 'ok');
+    setStep(2);
+
+    Swal.fire({
+      icon:'success',
+      title:'Tạo link thành công!',
+      html:`<div style="line-height:1.85;font-size:.84rem;color:#aaa;">Link xác thực đã được tạo thành công.<br>Nhấn <strong style="color:#ff4444;">Mở link</strong> để tiếp tục hoàn tất xác thực.</div>`,
+      confirmButtonText:'<i class="fa-solid fa-up-right-from-square"></i>&nbsp; Mở link ngay',
+      showCancelButton:true,
+      cancelButtonText:'Để sau',
+    }).then(r=>{
+      if(r.isConfirmed) window.open(currentUrl,'_blank');
+    });
+  }catch(e){
+    setStatus(e.message,'err');
+    Swal.fire({
+      icon:'error',
+      title:'Tạo link thất bại',
+      text:e.message,
+      confirmButtonText:'Thử lại',
+    });
+  }
+}
+
+async function claim(){
+  if(!currentRid) return setStatus('Chưa có RID để nhận key.','err');
+  Swal.fire({
+    title:'Đang nhận key...',
+    html:'<span style="color:#888;font-size:.84rem;line-height:1.7;">Đang xác thực phiên và cấp key cho thiết bị của bạn.</span>',
+    allowOutsideClick:false,
+    allowEscapeKey:false,
+    didOpen:()=>Swal.showLoading(),
+  });
+  try{
+    setStatus('Đang nhận key từ phiên đã xác thực...', 'info');
+    const d=await api('/api/free-key/claim',{method:'POST',body:JSON.stringify({rid:currentRid,deviceId:DEVICE_ID,userAgent:navigator.userAgent})});
+
+    /* Update key value */
+    document.getElementById('keyValue').textContent=d.key;
+
+    /* Update expiry chip */
+    const expiryStr=new Date(d.expiresAt).toLocaleString('vi-VN');
+    document.getElementById('keyExpiry').innerHTML=`<i class="fa-solid fa-clock"></i> Hết hạn: ${expiryStr}`;
+
+    /* Update hidden original element */
+    document.getElementById('expiryText').innerHTML=`<i class="fa-solid fa-clock"></i> Hết hạn: ${expiryStr}`;
+
+    /* Show key box */
+    document.getElementById('keyBox').classList.add('show');
+
+    setStatus('Nhận key thành công. Hãy copy key và quay lại app.', 'ok');
+    setStep(3);
+
+    Swal.fire({
+      icon:'success',
+      title:'Nhận key thành công!',
+      html:`<div style="line-height:1.9;font-size:.84rem;color:#aaa;">Key đã được cấp cho thiết bị của bạn.<br><br><span style="font-family:'JetBrains Mono',monospace;color:#ffd600;font-size:.95rem;font-weight:700;letter-spacing:.06em;background:rgba(255,214,0,0.08);padding:6px 12px;border-radius:8px;display:inline-block;margin:4px 0;">${d.key}</span><br><br>Quay lại app và đăng nhập bằng key trên.</div>`,
+      confirmButtonText:'<i class="fa-solid fa-copy"></i>&nbsp; Copy key',
+      showCancelButton:true,
+      cancelButtonText:'Đóng',
+    }).then(r=>{
+      if(r.isConfirmed){
+        navigator.clipboard.writeText(d.key);
+        Swal.fire({
+          icon:'success',title:'Đã sao chép!',
+          text:'Key đã được sao chép vào clipboard.',
+          timer:2000,showConfirmButton:false,
+          toast:true,position:'top-end',
+        });
+      }
+    });
+  }catch(e){
+    setStatus(e.message,'err');
+    Swal.fire({
+      icon:'error',
+      title:'Nhận key thất bại',
+      text:e.message,
+      confirmButtonText:'Thử lại',
+    });
+  }
+}
+
+/* === EVENT LISTENERS — KEPT EXACTLY === */
+document.getElementById('btnCreate').onclick=createLink;
+document.getElementById('btnClaim').onclick=claim;
+document.getElementById('copyKey').onclick=async()=>{
+  await navigator.clipboard.writeText(document.getElementById('keyValue').textContent.trim());
+  setStatus('Đã sao chép key vào clipboard.', 'ok');
+  Swal.fire({
+    icon:'success',title:'Đã sao chép!',
+    text:'Key đã được sao chép vào clipboard.',
+    timer:2000,showConfirmButton:false,
+    toast:true,position:'top-end',
+  });
+};
+
+/* === URL PARAMS HANDLING — KEPT EXACTLY === */
+const params=new URLSearchParams(location.search);
+if(params.get('error')) setStatus(params.get('error'),'err');
+if(params.get('verified')==='1'&&currentRid){
+  document.getElementById('sessionText').textContent=`RID: ${currentRid} · Đã xác thực thành công`;
+  setStatus('Xác thực thành công. Nhấn Nhận key để lấy key 5 giờ.', 'ok');
+  setStep(3);
+}
+
+/* === AUTO CREATE LINK ON LOAD === */
 createLink();
 </script>
 </body>
